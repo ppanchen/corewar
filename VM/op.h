@@ -92,3 +92,4 @@ typedef struct		s_op
 }					t_op;
 
 t_op				op_tab[17];
+

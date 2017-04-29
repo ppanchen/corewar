@@ -106,5 +106,7 @@ int					ft_numlen(int n);
 int					ft_pow(int num, int p);
 int					ft_printf(const char *format, ...);
 int					count_chars(char *str, char c);
+int					ft_arrsize(void **arr);
+
 
 #endif

@@ -17,6 +17,7 @@ int 	main(int argc, char **argv)
 {
 	int			i;
 	int 		j;
+	int			k;
 	t_player	**player;
 
 //	//////////////////////////
@@ -37,7 +38,7 @@ int 	main(int argc, char **argv)
 		else
 		{
 			player[j] = read_player(argv[i]);
-//			int k = -1;
+//			k = -1;
 //			ft_printf("sign is: \n");
 //			while (++k < 4)
 //				ft_printf("%.2hhx\n", player[j]->signature[k]);
@@ -61,6 +62,9 @@ int 	main(int argc, char **argv)
 		}
 	}
 	player[j] = 0;
-	start_work(player);
+	place_players(player);
+	k = -1;
+	while (++k < 4096)
+		ft_printf("%.2x ", g_field[k]);
 	return (0);
 }
