@@ -16,45 +16,51 @@
 int 	main(int argc, char **argv)
 {
 	int			i;
-	t_player	*player;
+	int 		j;
+	t_player	**player;
 
-	//////////////////////////
-	// 0xDE, 0xAD, 0xBE, 0xEF
-	int x = 0xDE << 24 | 0xAD << 16 | 0xBE << 8 | 0xEF;
-	x = 0xDEADBEEF;
-	char *p = (char *)&x;
-	printf(">>%2hhX %2hhX %2hhX %2hhX<<\n", p[0], p[1], p[2], p[3]);
-	//////////////////////////
+//	//////////////////////////
+//	// 0xDE, 0xAD, 0xBE, 0xEF
+//	int x = 0xDE << 24 | 0xAD << 16 | 0xBE << 8 | 0xEF;
+//	x = 0xDEADBEEF;
+//	char *p = (char *)&x;
+//	printf(">>%2hhX %2hhX %2hhX %2hhX<<\n", p[0], p[1], p[2], p[3]);
+//	//////////////////////////
 
 	i = 0;
+	j = 0;
+	player = (t_player **)malloc(sizeof(t_player *) * 5);
 	while (++i < argc)
 	{
 		if (ft_strcmp(argv[i], "-n") == 0);
 			//TODO grafics
 		else
 		{
-			player = read_player(argv[i]);
-			int k = -1;
-			ft_printf("sign is: \n");
-			while (++k < 4)
-				ft_printf("%.2hhx\n", player->signature[k]);
-			ft_printf("name is: \n");
-			k = -1;
-			while (++k < 128)
-				ft_printf("%.2hhx\n", player->name[k]);
-			ft_printf("len is: \n");
-			k = -1;
-			while (++k < 4)
-				ft_printf("%.2hhx\n", player->player_len[k]);
-			k = -1;
-			ft_printf("comment is: \n");
-			while (++k < 2048)
-				ft_printf("%.2hhx\n", player->comment[k]);
-			k = -1;
-			ft_printf("code is: \n");
-			while (++k < player->code_len)
-				ft_printf("%.2hhx\n", player->code[k]);
+			player[j] = read_player(argv[i]);
+//			int k = -1;
+//			ft_printf("sign is: \n");
+//			while (++k < 4)
+//				ft_printf("%.2hhx\n", player[j]->signature[k]);
+//			ft_printf("name is: \n");
+//			k = -1;
+//			while (++k < 128)
+//				ft_printf("%.2hhx\n", player[j]->name[k]);
+//			ft_printf("len is: \n");
+//			k = -1;
+//			while (++k < 4)
+//				ft_printf("%.2hhx\n", player[j]->player_len[k]);
+//			k = -1;
+//			ft_printf("comment is: \n");
+//			while (++k < 2048)
+//				ft_printf("%.2hhx\n", player[j]->comment[k]);
+//			k = -1;
+//			ft_printf("code is: \n");
+//			while (++k < player[j]->code_len)
+//				ft_printf("%.2hhx\n", player[j]->code[k]);
+			j++;
 		}
 	}
+	player[j] = 0;
+	start_work(player);
 	return (0);
 }

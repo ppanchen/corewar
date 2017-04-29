@@ -1,0 +1,5 @@
+corewar-championship/
+cmake-build-debug/
+CMakeLists.txt
+._corewar-championship
+.idea/
