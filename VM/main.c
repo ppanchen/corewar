@@ -13,58 +13,94 @@
 #include <stdio.h>
 #include "vm.h"
 
-int 	main(int argc, char **argv)
+void    ft_magic(int fd, int j, t_player *champs)
 {
-	int			i;
-	int 		j;
-	int			k;
-	t_player	**player;
+	int             i;
+	unsigned char   mass[4];
+	char            arr[4];
+	void            *num;
 
-//	//////////////////////////
-//	// 0xDE, 0xAD, 0xBE, 0xEF
-//	int x = 0xDE << 24 | 0xAD << 16 | 0xBE << 8 | 0xEF;
-//	x = 0xDEADBEEF;
-//	char *p = (char *)&x;
-//	printf(">>%2hhX %2hhX %2hhX %2hhX<<\n", p[0], p[1], p[2], p[3]);
-//	//////////////////////////
-
+	num = arr;
 	i = 0;
-	j = 0;
-	player = (t_player **)malloc(sizeof(t_player *) * 5);
-	while (++i < argc)
+	read(fd, mass, 4);
+	while (i < 4)
 	{
-		if (ft_strcmp(argv[i], "-n") == 0);
-			//TODO grafics
-		else
-		{
-			player[j] = read_player(argv[i]);
-//			k = -1;
-//			ft_printf("sign is: \n");
-//			while (++k < 4)
-//				ft_printf("%.2hhx\n", player[j]->signature[k]);
-//			ft_printf("name is: \n");
-//			k = -1;
-//			while (++k < 128)
-//				ft_printf("%.2hhx\n", player[j]->name[k]);
-//			ft_printf("len is: \n");
-//			k = -1;
-//			while (++k < 4)
-//				ft_printf("%.2hhx\n", player[j]->player_len[k]);
-//			k = -1;
-//			ft_printf("comment is: \n");
-//			while (++k < 2048)
-//				ft_printf("%.2hhx\n", player[j]->comment[k]);
-//			k = -1;
-//			ft_printf("code is: \n");
-//			while (++k < player[j]->code_len)
-//				ft_printf("%.2hhx\n", player[j]->code[k]);
-			j++;
-		}
+		arr[3-i] = mass[i];
+		i++;
 	}
-	player[j] = 0;
-	place_players(player);
-	k = -1;
-	while (++k < 4096)
-		ft_printf("%.2x ", g_field[k]);
-	return (0);
+	champs[j].magic = *(unsigned int*)num;
+//	printf("Magic_______%d\n", champs[j].magic);
+}
+
+void    ft_name(int fd, int j, t_player *champs)
+{
+	read(fd, champs[j].name, 128);
+	champs[j].name[128] = 0;
+//	printf("Name________%s\n", champs[j].name);
+}
+
+void    ft_prog_size(int fd, int j, t_player *champs)
+{
+	int             i;
+	unsigned char   mass[4];
+	char            arr[4];
+	void            *num;
+
+	num = arr;
+	i = 0;
+	read(fd, mass, 4);
+	while (i < 4)
+	{
+		arr[3-i] = mass[i];
+		i++;
+	}
+	champs[j].code_size= *(unsigned int *)num;
+//	printf("Chmp_size___%d\n", champs[j].code_size);
+}
+
+void    ft_division(char **mass, t_player *champs)
+{
+	int fd;
+	int i;
+	int len;
+	char *tmp;
+	int j;
+
+	j = -1;
+	while (mass[i])
+	{
+		len = (int)ft_strlen(mass[i]);
+		if (len >= 5)
+		{
+			tmp = mass[i];
+			tmp = tmp + len - 4;
+			if (ft_strcmp(tmp, ".cor") == 0)
+			{
+				j = j + 1;
+				fd = open(mass[i], O_RDONLY);
+				ft_make_player(fd, j, champs);
+			}
+		}
+		i++;
+	}
+}
+
+int main(int argc, char **argv)
+{
+	int         sum;
+	int         i;
+	t_player    *champs;
+
+	sum = 0;
+	i = 0;
+	if (argc >= 2)
+		sum = ft_count_champs(argv, sum);
+	champs = (t_player*)malloc(sizeof(t_player) * sum);
+	champs[0].players = sum;
+//	printf("SUM>>>>>%d\n", champs[0].players);
+	if (argc >= 2)
+	{
+		ft_division(argv, champs);
+	}
+
 }

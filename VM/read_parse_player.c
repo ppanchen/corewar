@@ -12,22 +12,52 @@
 
 #include "vm.h"
 
-t_player	*read_player(char *file)
+int ft_find_cor(char *s, int sum)
 {
-	int			fd;
-	t_player	*player;
+	int len;
+	char *tmp;
+
+	len = (int)ft_strlen(s);
+	if (len >= 5)
+	{
+		tmp = s;
+		tmp = tmp + len - 4;
+		if (ft_strcmp(tmp, ".cor") == 0)
+			sum++;
+	}
+	return (sum);
+}
+
+int   ft_count_champs(char **mass, int sum)
+{
+	int i;
+
+	i = 0;
+	while(mass[i])
+	{
+		sum = ft_find_cor(mass[i], sum);
+		i++;
+	}
+	return (sum);
+
+}
 
 
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-		return (0);
-	player = (t_player *)malloc(sizeof(t_player));
-	read(fd, &player->signature, 4);
-	read(fd, &player->name, 128);
-	read(fd, &player->noname, 4);
-	read(fd, &player->player_len, 4);
-	read(fd, &player->comment, 2048);
-	read(fd, &player->noname, 4);
-	player->code_len = read(fd, &player->code, 682);
-	return (player);
+void    ft_make_player(int fd, int j, t_player *champs)
+{
+
+	char extra[4];
+	ft_magic(fd, j, champs);
+	ft_name(fd, j, champs);
+	read(fd, extra, 4);
+	ft_prog_size(fd, j, champs);
+	ft_comment_code(fd, j, champs);
+}
+
+void    ft_comment_code(int fd, int j, t_player *champs)
+{
+	read(fd, champs[j].comment, 2052);
+	champs[j].comment[2048] = 0;
+	read(fd, champs[j].code, 682);
+	champs[j].code[682] = 0;
 }
