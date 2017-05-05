@@ -51,7 +51,7 @@ void    ft_prog_size(int fd, int j, t_player *champs)
 	read(fd, mass, 4);
 	while (i < 4)
 	{
-		arr[3-i] = mass[i];
+		arr[3 - i] = mass[i];
 		i++;
 	}
 	champs[j].code_size= *(unsigned int *)num;
@@ -67,6 +67,7 @@ void    ft_division(char **mass, t_player *champs)
 	int j;
 
 	j = -1;
+	i = 0;
 	while (mass[i])
 	{
 		len = (int)ft_strlen(mass[i]);
@@ -90,17 +91,17 @@ int main(int argc, char **argv)
 	int         sum;
 	int         i;
 	t_player    *champs;
+	int 		k = -1;			//for debug
 
-	sum = 0;
 	i = 0;
 	if (argc >= 2)
-		sum = ft_count_champs(argv, sum);
+		sum = ft_count_champs(argv, 0);
 	champs = (t_player*)malloc(sizeof(t_player) * sum);
 	champs[0].players = sum;
-//	printf("SUM>>>>>%d\n", champs[0].players);
 	if (argc >= 2)
-	{
 		ft_division(argv, champs);
-	}
-
+	place_players(champs);
+	run_processes(champs);
+//	while (++k < 4096)
+//		ft_printf("%.2x ", g_field[k]);
 }

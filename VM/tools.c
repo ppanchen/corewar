@@ -1,26 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_processes.c                                    :+:      :+:    :+:   */
+/*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppanchen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/04 14:39:16 by ppanchen          #+#    #+#             */
-/*   Updated: 2017/05/04 14:39:17 by ppanchen         ###   ########.fr       */
+/*   Created: 2017/05/05 18:28:12 by ppanchen          #+#    #+#             */
+/*   Updated: 2017/05/05 18:28:12 by ppanchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void			run_processes(t_player *player)
-{
-	t_process	*process;
-	t_args		arg;
 
-	process = fill_process(player);
-	while (process)
-	{
-		arg = parse_op(process->pc);
-		action[arg.op_code - 1](process, arg);
-	}
-}

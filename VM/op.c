@@ -39,23 +39,23 @@ t_op    op_tab[17] =
 		{0, 0, {0}, 0, 0, 0, 0, 0}
 };
 
-//t_action		action[17]= {
-//		ft_live,
-//		ft_ld,
-//		ft_st,
-//		ft_add,
-//		ft_sub,
-//		ft_and,
-//		ft_or,
-//		ft_xor,
-//		ft_zjmp,
-//		ft_ldi,
-//		ft_sti,
-//		ft_fork,
-//		ft_lld,
-//		ft_lldi,
-//		ft_lfork,
-//		ft_aff,
-//		0
-//};
+t_action		action[17]= {
+		ft_live,
+		ft_ld,
+		ft_st,
+		ft_add,
+		ft_sub,
+		ft_and,
+		ft_or,
+		ft_xor,
+		ft_zjmp,
+		ft_ldi,
+		ft_sti,
+		ft_fork,
+		ft_lld,
+		ft_lldi,
+		ft_lfork,
+		ft_aff,
+		0
+};
 

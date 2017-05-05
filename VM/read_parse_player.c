@@ -39,14 +39,13 @@ int   ft_count_champs(char **mass, int sum)
 		i++;
 	}
 	return (sum);
-
 }
 
 
 void    ft_make_player(int fd, int j, t_player *champs)
 {
-
 	char extra[4];
+
 	ft_magic(fd, j, champs);
 	ft_name(fd, j, champs);
 	read(fd, extra, 4);
