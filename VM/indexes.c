@@ -1,38 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_processes.c                                    :+:      :+:    :+:   */
+/*   indexes.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppanchen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/04 14:39:16 by ppanchen          #+#    #+#             */
-/*   Updated: 2017/05/04 14:39:17 by ppanchen         ###   ########.fr       */
+/*   Created: 2017/05/06 16:25:50 by ppanchen          #+#    #+#             */
+/*   Updated: 2017/05/06 16:25:51 by ppanchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void			run_processes(t_player *player)
+void					fill_indexes(t_player *player)		//debug
 {
-	t_process	*process;
-	t_args		arg;
-	t_process	*start;
+	int i;
 
-	process = fill_process(player);
-	fill_indexes(player);
-	start = process;
-	while(start)
+	i = -1;
+	while (-player[0].players != i)
 	{
-		while (process)
-		{
-			arg = parse_op(process->pc);
-
-			action[arg.op_code - 1](&process, arg);
-			process = process->next;
-		}
-		start = find_start(process);
-		process = start;
+		indexes[-i - 1] = i;
+		i--;
 	}
-
-
 }

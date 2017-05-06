@@ -81,7 +81,7 @@ typedef struct		s_op
 	char 			name[10];
 	int 			args_len;
 	int 			args[3];
-	int 			num_of_act;
+	int 			op_code;
 	int 			delay;
 	char			act[50];
 	int 			coding_bite;
