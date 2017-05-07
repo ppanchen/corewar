@@ -36,17 +36,18 @@ char					fill_check_pr(t_process	*pr, t_op op)
 		return (1);
 }
 
-int						ft_live(t_process **process, t_args args)
+int						ft_live(t_process *process, t_player *player)
 {
 	t_op	op;
 	char 	r;
 
-	op = find_op(args.op_code);
-	if ((r = fill_check_pr(*process, op)))
+	op = find_op(process->args.op_code);
+	if ((r = fill_check_pr(process, op)))
 	{
-
-		//todo ft_live
-		(*process)->pc += args.skip;
+		if (index_exist(process->args.arg[0], player))
+			g_winner = process->args.arg[0];
+		process->said_alive++;
+		process->pc += process->args.skip;
 	}
 	return (r);
 }

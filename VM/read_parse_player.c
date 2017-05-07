@@ -51,6 +51,7 @@ void    ft_make_player(int fd, int j, t_player *champs)
 	read(fd, extra, 4);
 	ft_prog_size(fd, j, champs);
 	ft_comment_code(fd, j, champs);
+	champs[j].index = -(j + 1);
 }
 
 void    ft_comment_code(int fd, int j, t_player *champs)

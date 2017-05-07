@@ -89,16 +89,21 @@ t_process		*fill_process(t_player *player)
 	return (pr);
 }
 
-t_process		*del_process(t_process **to_del)
+t_process		*kill_process(t_process **to_del)
 {
+	t_process	*tmp;
 	t_process	*ret;
 
+	if ((*to_del)->next)
+		tmp = (*to_del)->next;
+	else
+		tmp = (*to_del)->prev;
 	ret = (*to_del)->next;
 	if ((*to_del)->next)
 		(*to_del)->next->prev = (*to_del)->prev;
 	if ((*to_del)->prev)
 		(*to_del)->prev->next = (*to_del)->next;
 	ft_memdel((void **)to_del);
-	(*to_del) = ret;
+	(*to_del) = tmp;
 	return (ret);
 }

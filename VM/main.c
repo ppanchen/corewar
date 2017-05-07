@@ -29,14 +29,12 @@ void    ft_magic(int fd, int j, t_player *champs)
 		i++;
 	}
 	champs[j].magic = *(unsigned int*)num;
-//	printf("Magic_______%d\n", champs[j].magic);
 }
 
 void    ft_name(int fd, int j, t_player *champs)
 {
 	read(fd, champs[j].name, 128);
 	champs[j].name[128] = 0;
-//	printf("Name________%s\n", champs[j].name);
 }
 
 void    ft_prog_size(int fd, int j, t_player *champs)
@@ -55,7 +53,6 @@ void    ft_prog_size(int fd, int j, t_player *champs)
 		i++;
 	}
 	champs[j].code_size= *(unsigned int *)num;
-//	printf("Chmp_size___%d\n", champs[j].code_size);
 }
 
 void    ft_division(char **mass, t_player *champs)

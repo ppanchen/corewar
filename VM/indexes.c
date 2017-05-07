@@ -12,14 +12,13 @@
 
 #include "vm.h"
 
-void					fill_indexes(t_player *player)		//debug
+char 					index_exist(int index, t_player *player)
 {
-	int i;
+	int 	i;
 
 	i = -1;
-	while (-player[0].players != i)
-	{
-		indexes[-i - 1] = i;
-		i--;
-	}
+	while (++i < player[0].players)
+		if (player[i].index == index)
+			return (1);
+	return (0);
 }
