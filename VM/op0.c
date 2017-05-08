@@ -48,6 +48,35 @@ int						ft_live(t_process *process, t_player *player)
 			g_winner = process->args.arg[0];
 		process->said_alive++;
 		process->pc += process->args.skip;
+		process->op_code = 0;
+	}
+	return (r);
+}
+
+int 					ft_ld(t_process *process, t_player *player)
+{
+	t_op	op;
+	char 	r;
+
+	op = find_op(process->args.op_code);
+	if ((r = fill_check_pr(process, op)))
+	{
+		process->reg[process->args.arg[1] - 1] = process->args.arg[0];
+		process->carry_flag = 0; // todo
+	}
+	return (r);
+}
+
+int 					ft_st(t_process *process, t_player *player)
+{
+	t_op	op;
+	char 	r;
+
+	op = find_op(process->args.op_code);
+	if ((r = fill_check_pr(process, op)))
+	{
+//		process->reg[process->args.arg[1] - 1] = process->args.arg[0];
+//		process->carry_flag = 0; // todo
 	}
 	return (r);
 }

@@ -41,8 +41,8 @@ t_op    op_tab[17] =
 
 t_action		action[17]= {
 		ft_live,
-//		ft_ld,
-//		ft_st,
+		ft_ld,
+		ft_st,
 //		ft_add,
 //		ft_sub,
 //		ft_and,

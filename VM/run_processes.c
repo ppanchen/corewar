@@ -47,8 +47,8 @@ void			run_processes(t_player *player)
 	{
 		while (process)
 		{
-//			if (empty_procces(*process))
-//				process->args = parse_op(process->pc);
+//			if (empty_procces(*process))							// have to be realized by amusel
+//				process->args = parse_op(process->pc);				//
 			process->args.arg[0] = -2;
 			process->args.op_code = 1;
 			action[process->args.op_code - 1](process, player);
@@ -56,10 +56,15 @@ void			run_processes(t_player *player)
 				break ;
 			process = process->next;
 		}
-		check_process(&process);
 		i++;
+		if (i == 1535)
+		{
+			i++;
+			i--;
+		}
 		start = find_start(process);
 		process = start;
+		check_process(&process);
 	}
 
 }

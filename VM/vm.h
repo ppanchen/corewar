@@ -58,21 +58,21 @@ typedef struct			s_process
 
 typedef int				(* t_action)(t_process *process, t_player *player);
 int						ft_live(t_process *process, t_player *player);			//have to be realized
-int						ft_ld(t_process **process, t_player *player);			//have to be realized
-int						ft_st(t_process **process, t_player *player);			//have to be realized
-int						ft_add(t_process **process, t_player *player);			//have to be realized
-int						ft_sub(t_process **process, t_player *player);			//have to be realized
-int						ft_and(t_process **process, t_player *player);			//have to be realized
-int						ft_or(t_process **process, t_player *player);			//have to be realized
-int						ft_xor(t_process **process, t_player *player);			//have to be realized
-int						ft_zjmp(t_process **process, t_player *player);			//have to be realized
-int						ft_ldi(t_process **process, t_player *player);			//have to be realized
-int						ft_sti(t_process **process, t_player *player);			//have to be realized
-int						ft_fork(t_process **process, t_player *player);			//have to be realized
-int						ft_lld(t_process **process, t_player *player);			//have to be realized
-int						ft_lldi(t_process **process, t_player *player);			//have to be realized
-int						ft_lfork(t_process **process, t_player *player);		//have to be realized
-int						ft_aff(t_process **process, t_player *player);			//have to be realized
+int						ft_ld(t_process *process, t_player *player);			//have to be realized
+int						ft_st(t_process *process, t_player *player);			//have to be realized
+int						ft_add(t_process *process, t_player *player);			//have to be realized
+int						ft_sub(t_process *process, t_player *player);			//have to be realized
+int						ft_and(t_process *process, t_player *player);			//have to be realized
+int						ft_or(t_process *process, t_player *player);			//have to be realized
+int						ft_xor(t_process *process, t_player *player);			//have to be realized
+int						ft_zjmp(t_process *process, t_player *player);			//have to be realized
+int						ft_ldi(t_process *process, t_player *player);			//have to be realized
+int						ft_sti(t_process *process, t_player *player);			//have to be realized
+int						ft_fork(t_process *process, t_player *player);			//have to be realized
+int						ft_lld(t_process *process, t_player *player);			//have to be realized
+int						ft_lldi(t_process *process, t_player *player);			//have to be realized
+int						ft_lfork(t_process *process, t_player *player);		//have to be realized
+int						ft_aff(t_process *process, t_player *player);			//have to be realized
 
 unsigned char 			g_field[4096];
 int 					g_winner;
