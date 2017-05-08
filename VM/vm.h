@@ -88,11 +88,13 @@ t_process				*kill_process(t_process **to_del);
 t_args					parse_op(int pc);
 t_process				*find_start(t_process *process);
 t_op 					find_op(char	op_code);
+char					fill_check_pr(t_process	*pr, t_op op);
 char 					index_exist(int index, t_player *player);
 t_args					clean_arg();
 void					check_process(t_process **process);
 int 					ret_pc(int current, int shift);
-char 					*to
+unsigned char			*to_little_endian(int num);
+void					place_on_field(unsigned char *str, int pc);
 
 unsigned char 			g_field[4096];
 int 					g_winner;
