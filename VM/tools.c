@@ -12,3 +12,12 @@
 
 #include "vm.h"
 
+int 	ret_pc(int current, int shift)
+{
+	int ret;
+
+	ret  = current + shift;
+	if (ret >= 4096)
+		ret -= 4096;
+	return (ret);
+}

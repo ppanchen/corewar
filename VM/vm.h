@@ -57,8 +57,8 @@ typedef struct			s_process
 
 
 typedef int				(* t_action)(t_process *process, t_player *player);
-int						ft_live(t_process *process, t_player *player);			//have to be realized
-int						ft_ld(t_process *process, t_player *player);			//have to be realized
+int						ft_live(t_process *process, t_player *player);
+int						ft_ld(t_process *process, t_player *player);
 int						ft_st(t_process *process, t_player *player);			//have to be realized
 int						ft_add(t_process *process, t_player *player);			//have to be realized
 int						ft_sub(t_process *process, t_player *player);			//have to be realized
@@ -71,13 +71,8 @@ int						ft_sti(t_process *process, t_player *player);			//have to be realized
 int						ft_fork(t_process *process, t_player *player);			//have to be realized
 int						ft_lld(t_process *process, t_player *player);			//have to be realized
 int						ft_lldi(t_process *process, t_player *player);			//have to be realized
-int						ft_lfork(t_process *process, t_player *player);		//have to be realized
+int						ft_lfork(t_process *process, t_player *player);			//have to be realized
 int						ft_aff(t_process *process, t_player *player);			//have to be realized
-
-unsigned char 			g_field[4096];
-int 					g_winner;
-int						g_to_die;
-t_action 				action[17];
 
 t_player				*read_player(char *file);
 t_process				*fill_process(t_player *player);
@@ -96,7 +91,13 @@ t_op 					find_op(char	op_code);
 char 					index_exist(int index, t_player *player);
 t_args					clean_arg();
 void					check_process(t_process **process);
+int 					ret_pc(int current, int shift);
+char 					*to
 
+unsigned char 			g_field[4096];
+int 					g_winner;
+int						g_to_die;
+t_action 				action[17];
 
 
 #endif
