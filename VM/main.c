@@ -99,7 +99,6 @@ int main(int argc, char **argv)
 		ft_division(argv, champs);
 	place_players(champs);
 	run_processes(champs);
-
-//	while (++k < 4096)
-//		ft_printf("%.2x ", g_field[k]);
+	ft_printf("%i\n", g_winner);
+	print_field();
 }

@@ -47,24 +47,24 @@ void			run_processes(t_player *player)
 	{
 		while (process)
 		{
-//			if (empty_procces(*process))							// have to be realized by amusel
-//				process->args = parse_op(process->pc);				//
-			process->args.arg[0] = -2;
-			process->args.op_code = 1;
-			action[process->args.op_code - 1](process, player);
+			if (empty_procces(*process))
+				process->args = parse_op(process->pc);
+			if (process->args.error == 2)
+				process->pc = ret_pc(process->pc, 1);
+			else if (process->args.error == 1)
+				process->pc = ret_pc(process->pc, 2);
+			else
+				action[process->args.op_code - 1](process, player);
 			if (process->next == 0)
 				break ;
 			process = process->next;
 		}
 		i++;
-		if (i == 1535)
-		{
-			i++;
-			i--;
-		}
+		if (i == 3072)
+			print_field();
+		check_process(&process);
 		start = find_start(process);
 		process = start;
-		check_process(&process);
 	}
-
+	print_field();
 }

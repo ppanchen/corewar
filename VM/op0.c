@@ -23,7 +23,7 @@ char					fill_check_pr(t_process	*pr, t_op op)
 {
 	if	(pr->delay == 0 && !pr->op_code)
 	{
-		pr->delay = op.delay;
+		pr->delay = op.delay - 1;
 		pr->op_code = (char)op.op_code;
 		return 0;
 	}
@@ -64,6 +64,8 @@ int 					ft_ld(t_process *process, t_player *player)
 	{
 		process->reg[process->args.arg[1] - 1] = process->args.arg[0];
 		process->carry_flag =  (char)(process->args.arg[0] != 0 ? 1 : 0);
+		process->pc += process->args.skip;
+		process->op_code = 0;
 	}
 	return (r);
 }
@@ -75,6 +77,7 @@ int 					ft_st(t_process *process, t_player *player)
 	unsigned char 	*str;
 	int				pc;
 
+	(void *)player;
 	op = find_op(process->args.op_code);
 	if ((r = fill_check_pr(process, op)))
 	{
@@ -88,6 +91,8 @@ int 					ft_st(t_process *process, t_player *player)
 		else
 			process->reg[process->args.arg[1] - 1] =
 					process->reg[process->args.arg[0] - 1];
+		process->pc += process->args.skip;
+		process->op_code = 0;
 	}
 	return (r);
 }

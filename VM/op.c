@@ -49,13 +49,13 @@ t_action		action[17]= {
 		ft_or,
 		ft_xor,
 		ft_zjmp,
-//		ft_ldi,
-//		ft_sti,
-//		ft_fork,
+		ft_ldi,
+		ft_sti,
+		ft_fork,
 		ft_lld,
-//		ft_lldi,
-//		ft_lfork,
-//		ft_aff,
+		ft_lldi,
+		ft_lfork,
+		ft_aff,
 		0
 };
 

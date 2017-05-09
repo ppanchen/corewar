@@ -28,14 +28,14 @@ typedef struct			s_player
 	int                 players;
 }                		t_player;
 
-typedef struct			s_args
+typedef struct          s_args
 {
-	int 				arg[3];
-	char 				coding_byte;
-	char 				op_code;
-	int 				skip;
-	char 				error;
-}						t_args;
+	int					arg[3];
+	unsigned char       coding_byte;
+	char                op_code;
+	int                 skip;
+	char                error;
+}                       t_args;
 
 typedef struct			s_process
 {
@@ -59,20 +59,20 @@ typedef struct			s_process
 typedef int				(* t_action)(t_process *process, t_player *player);
 int						ft_live(t_process *process, t_player *player);
 int						ft_ld(t_process *process, t_player *player);
-int						ft_st(t_process *process, t_player *player);			//have to be realized
-int						ft_add(t_process *process, t_player *player);			//have to be realized
-int						ft_sub(t_process *process, t_player *player);			//have to be realized
-int						ft_and(t_process *process, t_player *player);			//have to be realized
-int						ft_or(t_process *process, t_player *player);			//have to be realized
-int						ft_xor(t_process *process, t_player *player);			//have to be realized
-int						ft_zjmp(t_process *process, t_player *player);			//have to be realized
-int						ft_ldi(t_process *process, t_player *player);			//have to be realized
-int						ft_sti(t_process *process, t_player *player);			//have to be realized
-int						ft_fork(t_process *process, t_player *player);			//have to be realized
-int						ft_lld(t_process *process, t_player *player);			//have to be realized
-int						ft_lldi(t_process *process, t_player *player);			//have to be realized
-int						ft_lfork(t_process *process, t_player *player);			//have to be realized
-int						ft_aff(t_process *process, t_player *player);			//have to be realized
+int						ft_st(t_process *process, t_player *player);
+int						ft_add(t_process *process, t_player *player);
+int						ft_sub(t_process *process, t_player *player);
+int						ft_and(t_process *process, t_player *player);
+int						ft_or(t_process *process, t_player *player);
+int						ft_xor(t_process *process, t_player *player);
+int						ft_zjmp(t_process *process, t_player *player);
+int						ft_ldi(t_process *process, t_player *player);
+int						ft_sti(t_process *process, t_player *player);
+int						ft_fork(t_process *process, t_player *player);
+int						ft_lld(t_process *process, t_player *player);
+int						ft_lldi(t_process *process, t_player *player);
+int						ft_lfork(t_process *process, t_player *player);
+int						ft_aff(t_process *process, t_player *player);
 
 t_player				*read_player(char *file);
 t_process				*fill_process(t_player *player);
@@ -95,6 +95,21 @@ void					check_process(t_process **process);
 int 					ret_pc(int current, int shift);
 unsigned char			*to_little_endian(int num);
 void					place_on_field(unsigned char *str, int pc);
+char 					*c_bite_to_str(int coding_bite);
+t_process				*shift_list(t_process *first, t_process *start);
+t_process				*cpy_process(t_process *process);
+
+t_args            		bigcom(int pc, t_args command, char *str);
+t_args            		second_b(int pc, t_args command, char *str, int i);
+t_args            		first_b(int pc, t_args command, char *str, int i);
+t_args            		fill_command(int pc, t_args command);
+t_args            		ld_manage(int pc, t_args command, char *str);
+int    					indir(int pc, int tns, t_args command);
+t_args            		parse_st(int pc, t_args command, char *str, int i);
+int    					transfer(int amount, int pc);
+t_args            		get_op(int pc, t_args command);
+void					print_field(void);
+t_args					clean_arg();
 
 unsigned char 			g_field[4096];
 int 					g_winner;

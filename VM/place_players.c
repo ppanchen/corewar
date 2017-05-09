@@ -18,6 +18,7 @@ void			place_players(t_player *player)
 	int i;
 	int j;
 
+	ft_bzero((void *)g_field, 4096);
 	i = -1;
 	coor[0] = 0;
 	if (player[0].players == 2)
