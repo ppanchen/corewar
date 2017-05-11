@@ -100,5 +100,5 @@ int main(int argc, char **argv)
 	place_players(champs);
 	run_processes(champs);
 	ft_printf("%i\n", g_winner);
-	print_field();
+//	print_field();
 }

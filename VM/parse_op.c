@@ -17,13 +17,11 @@ t_args			parse_op(int pc)
 	t_args command;
 
 	command = clean_arg();
-//	command.arg[0] = -1;
-//	command.arg[1] = -1;
-//	command.arg[2] = -1;
-//	command.error = 0;
 	command = get_op(pc, command);
 	if (command.op_code > 17 || command.op_code == 0)
-		command.error = 2;
+		command.error = 1;
+	if (command.error > 0)
+		command.skip = 1;
 	return (command);
 }
 

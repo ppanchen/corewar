@@ -48,20 +48,22 @@ void			run_processes(t_player *player)
 		while (process)
 		{
 			if (empty_procces(*process))
+			{
 				process->args = parse_op(process->pc);
-			if (process->args.error == 2)
-				process->pc = ret_pc(process->pc, 1);
-			else if (process->args.error == 1)
-				process->pc = ret_pc(process->pc, 2);
-			else
-				action[process->args.op_code - 1](process, player);
+				if (process->args.op_code == 0)
+					process->pc++;
+			}
+			if (process->args.op_code != 0 &&
+					action[process->args.op_code - 1](process, player))
+					continue ;
 			if (process->next == 0)
 				break ;
 			process = process->next;
 		}
-		i++;
-		if (i == 3072)
+		if (i == 50)
 			print_field();
+		i++;
+		process = find_start(process);
 		check_process(&process);
 		start = find_start(process);
 		process = start;

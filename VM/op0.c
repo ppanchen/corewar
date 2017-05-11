@@ -44,9 +44,12 @@ int						ft_live(t_process *process, t_player *player)
 	op = find_op(process->args.op_code);
 	if ((r = fill_check_pr(process, op)))
 	{
-		if (index_exist(process->args.arg[0], player))
-			g_winner = process->args.arg[0];
-		process->said_alive++;
+		if (!process->args.error)
+		{
+			if (index_exist(process->args.arg[0], player))
+				g_winner = process->args.arg[0];
+			process->said_alive++;
+		}
 		process->pc += process->args.skip;
 		process->op_code = 0;
 	}
@@ -62,8 +65,11 @@ int 					ft_ld(t_process *process, t_player *player)
 	op = find_op(process->args.op_code);
 	if ((r = fill_check_pr(process, op)))
 	{
-		process->reg[process->args.arg[1] - 1] = process->args.arg[0];
-		process->carry_flag =  (char)(process->args.arg[0] != 0 ? 1 : 0);
+		if (!process->args.error)
+		{
+			process->reg[process->args.arg[1] - 1] = process->args.arg[0];
+			process->carry_flag = (char) (process->args.arg[0] != 0 ? 1 : 0);
+		}
 		process->pc += process->args.skip;
 		process->op_code = 0;
 	}
@@ -81,18 +87,21 @@ int 					ft_st(t_process *process, t_player *player)
 	op = find_op(process->args.op_code);
 	if ((r = fill_check_pr(process, op)))
 	{
-		if (process->args.op_code == 112)
+		if (!process->args.error)
 		{
-			pc = ret_pc(process->pc, (process->args.arg[1] % IDX_MOD));
-			str = to_little_endian(process->reg[process->args.arg[0] - 1]);
-			place_on_field(str, pc);
-			ft_memdel((void **)&str);
+			if (process->args.coding_byte == 112)
+			{
+				pc = ret_pc(process->pc, (process->args.arg[1] % IDX_MOD));
+				str = to_little_endian(process->reg[process->args.arg[0] - 1]);
+				place_on_field(str, pc);
+				ft_memdel((void **) &str);
+			}
+			else
+				process->reg[process->args.arg[1] - 1] =
+						process->reg[process->args.arg[0] - 1];
 		}
-		else
-			process->reg[process->args.arg[1] - 1] =
-					process->reg[process->args.arg[0] - 1];
-		process->pc += process->args.skip;
 		process->op_code = 0;
+		process->pc += process->args.skip;
 	}
 	return (r);
 }

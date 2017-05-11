@@ -30,7 +30,7 @@ unsigned char 					*to_little_endian(int num)
 	int 			j;
 
 	pointer = (unsigned char *)&num;
-	arr = (unsigned char *)malloc(sizeof(unsigned char) * 4);
+	arr = (unsigned char *)ft_memalloc(4);
 	i = -1;
 	j = 3;
 	while (++i < 4)
@@ -51,6 +51,7 @@ void					place_on_field(unsigned char *str, int pc)
 		while (pc + i >= 4096)
 			pc -= 4096;
 		g_field[pc + i] = str[i];
+//		print_field();
 	}
 }
 

@@ -18,14 +18,14 @@ t_args			bigcom(int pc, t_args command, char *str)
 
 	i = (int)ft_strlen(str) - 1;
 	if (str[i] != '0' || str[i - 1] != '0')
-		command.error = 1;
+		command.error = 2;
 	if (str[i - 2] == '1' && str[i - 3] == '0')
 		command.arg[2] = 1;
 	else if (str[i - 2] == '0' && str[i - 3] == '1' && \
 			command.op_code == 11)
 		command.arg[2] = 2;
 	else
-		command.error = 1;
+		command.error = 2;
 	if (command.op_code == 3)
 	{
 		command = parse_st(pc, command, str, i);
@@ -49,7 +49,7 @@ t_args			second_b(int pc, t_args command, char *str, int i)
 			command.op_code != 10 && command.op_code != 14)
 		command.arg[1] = 3;
 	else
-		command.error = 1;
+		command.error = 2;
 	command = first_b(pc, command, str, i);
 	return (command);
 }
@@ -67,7 +67,7 @@ t_args			first_b(int pc, t_args command, char *str, int i)
 	else if (str[i - 6] == '1')
 		command.arg[0] = 1;
 	else
-		command.error = 1;
+		command.error = 2;
 	command = fill_command(pc, command);
 	return (command);
 }

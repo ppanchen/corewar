@@ -47,7 +47,7 @@ t_args			parse_st(int pc, t_args command, char *str, int i)
 		command.skip = 5;
 	}
 	else
-		command.error = 1;
+		command.error = 2;
 	return (command);
 }
 
