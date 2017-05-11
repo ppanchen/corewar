@@ -68,7 +68,7 @@ int 					ft_ld(t_process *process, t_player *player)
 		if (!process->args.error)
 		{
 			process->reg[process->args.arg[1] - 1] = process->args.arg[0];
-			process->carry_flag = (char) (process->args.arg[0] != 0 ? 1 : 0);
+			process->carry_flag = (char) (process->args.arg[0] == 0 ? 1 : 0);
 		}
 		process->pc += process->args.skip;
 		process->op_code = 0;

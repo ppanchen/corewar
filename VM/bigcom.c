@@ -60,7 +60,7 @@ t_args			first_b(int pc, t_args command, char *str, int i)
 			(command.op_code == 6 || command.op_code == 7 || \
 			command.op_code == 8)))
 		command.arg[0] = 4;
-	else if (str[i - 6] == '0' && str[i - 6] == '1' && command.op_code != 11)
+	else if (str[i - 6] == '0' && str[i - 7] == '1' && command.op_code != 11)
 		command.arg[0] = 2;
 	else if (str[i - 6] == '1' && str[i - 7] == '1' && command.op_code != 11)
 		command.arg[0] = 3;

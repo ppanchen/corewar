@@ -24,9 +24,8 @@ int						ft_zjmp(t_process *process, t_player *player)
 		if (!process->args.error)
 		{
 			if (process->carry_flag == 1)                        //can be a mistake
-				process->pc = process->args.arg[0];
+				process->pc = ret_pc(process->pc, process->args.arg[0]);
 		}
-		process->pc += process->args.skip;
 		process->op_code = 0;
 	}
 	return (r);
@@ -50,8 +49,8 @@ int						ft_ldi(t_process *process, t_player *player)
 				process->args.arg[0] = process->reg[process->args.arg[0] - 1];
 			if (c_bite[2] == '0' && c_bite[3] == '1')
 				process->args.arg[1] = process->reg[process->args.arg[1] - 1];
-			pc = process->pc + (process->args.arg[0] % IDX_MOD) +
-				 (process->args.arg[1] % IDX_MOD);
+			pc = ret_pc(process->pc, (process->args.arg[0] +
+									  process->args.arg[1]) % IDX_MOD);
 			process->reg[process->args.arg[2] - 1] = transfer(4, pc);
 			ft_memdel((void **) &c_bite);
 		}
@@ -80,8 +79,8 @@ int						ft_sti(t_process *process, t_player *player)
 				process->args.arg[1] = process->reg[process->args.arg[1] - 1];
 			if (c_bite[4] == '0' && c_bite[5] == '1')
 				process->args.arg[2] = process->reg[process->args.arg[2] - 1];
-			pc = process->pc + (process->args.arg[0] % IDX_MOD) +
-				 (process->args.arg[1] % IDX_MOD);
+			pc = ret_pc(process->pc, (process->args.arg[1] +
+									 process->args.arg[2]) % IDX_MOD);
 			str = to_little_endian(process->reg[process->args.arg[0] - 1]);
 			place_on_field(str, pc);
 			ft_memdel((void **) &str);

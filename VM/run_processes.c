@@ -45,23 +45,32 @@ void			run_processes(t_player *player)
 	start = process;
 	while(start)
 	{
+		int n = 0;
 		while (process)
 		{
 			if (empty_procces(*process))
 			{
 				process->args = parse_op(process->pc);
-				if (process->args.op_code == 0)
+				int j = -1;
+				ft_printf("pr N: %02d | %04d | ", n, process->pc);
+				while (++j < process->args.skip)
+					ft_printf("%.2x ", g_field[process->pc + j]);
+				ft_printf("\n");
+				if (process->args.op_code <= 0 || process->args.op_code > 16)
 					process->pc++;
 			}
-			if (process->args.op_code != 0 &&
-					action[process->args.op_code - 1](process, player))
-					continue ;
+			if (!(process->args.op_code <= 0 || process->args.op_code > 16) &&
+ 					action[process->args.op_code - 1](process, player))
+			{
+				continue ;
+			}
 			if (process->next == 0)
 				break ;
 			process = process->next;
+			n++;
 		}
-		if (i == 50)
-			print_field();
+//		if (i == 50)
+//			print_field();
 		i++;
 		process = find_start(process);
 		check_process(&process);
