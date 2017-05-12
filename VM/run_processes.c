@@ -39,8 +39,10 @@ void			run_processes(t_player *player)
 	t_process	*process;
 	t_process	*start;
 	int 		i;
+	int 		flag;
 
 	i = 0;
+	flag = 0;
 	process = fill_process(player);
 	start = process;
 	while(start)
@@ -48,34 +50,38 @@ void			run_processes(t_player *player)
 		int n = 0;
 		while (process)
 		{
-			if (empty_procces(*process))
+			if (!process->isn_empty)
 			{
-				process->args = parse_op(process->pc);
-				int j = -1;
-				ft_printf("pr N: %02d | %04d | ", n, process->pc);
-				while (++j < process->args.skip)
-					ft_printf("%.2x ", g_field[process->pc + j]);
-				ft_printf("\n");
-				if (process->args.op_code <= 0 || process->args.op_code > 16)
+//				process->args = parse_op(process->pc);
+				process->op_code = g_field[process->pc];
+//				int j = -1;
+//				ft_printf("pr N: %02d | %04d | ", n, process->pc);
+//				while (++j < 7)
+//					ft_printf("%.2x ", g_field[process->pc + j]);
+//				ft_printf("\n");
+				if ((process->op_code <= 0 || process->op_code > 16) && !flag)
 					process->pc++;
 			}
-			if (!(process->args.op_code <= 0 || process->args.op_code > 16) &&
- 					action[process->args.op_code - 1](process, player))
+			if (!(process->op_code <= 0 || process->op_code > 16) &&
+ 					action[process->op_code - 1](process, player))
 			{
+				flag = 1;
 				continue ;
 			}
 			if (process->next == 0)
 				break ;
 			process = process->next;
 			n++;
+			flag = 0;
 		}
-//		if (i == 50)
+//		if (i == 5000)
 //			print_field();
-		i++;
 		process = find_start(process);
+		(g_graphic_flag) && print_hand(process, i);
+		i++;
 		check_process(&process);
 		start = find_start(process);
 		process = start;
 	}
-	print_field();
+//	print_field();
 }

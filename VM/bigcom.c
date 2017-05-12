@@ -17,8 +17,6 @@ t_args			bigcom(int pc, t_args command, char *str)
 	int	i;
 
 	i = (int)ft_strlen(str) - 1;
-	if (str[i] != '0' || str[i - 1] != '0')
-		command.error = 2;
 	if (str[i - 2] == '1' && str[i - 3] == '0')
 		command.arg[2] = 1;
 	else if (str[i - 2] == '0' && str[i - 3] == '1' && \
@@ -95,6 +93,7 @@ t_args			fill_command(int pc, t_args command)
 		command.arg[1] = transfer(temp[1], pc + temp[0] + 2);
 	command.arg[2] = transfer(temp[2], pc + temp[0] + temp[1] + 2);
 	command.skip = temp[0] + temp[1] + temp[2] + 2;
+	command = reg(command, temp);
 	return (command);
 }
 
@@ -105,12 +104,14 @@ t_args			ld_manage(int pc, t_args command, char *str)
 		command.arg[0] = transfer(4, pc + 2);
 		command.arg[1] = g_field[pc + 6];
 		command.skip = 7;
+		command.error += (command.arg[1] > 16 || command.arg[1] == 0) ? 2 : 0;
 	}
 	else
 	{
 		command.arg[0] = indir(pc, transfer(2, pc + 2), command);
 		command.arg[1] = g_field[pc + 4];
 		command.skip = 5;
+		command.error += (command.arg[1] > 16 || command.arg[1] == 0) ? 2 : 0;
 	}
 	return (command);
 }

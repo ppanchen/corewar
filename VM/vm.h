@@ -16,6 +16,11 @@
 # include "../libft/libft.h"
 # include "op.h"
 # include <fcntl.h>
+# include <curses.h>
+
+# define MAIN_COLOR 1
+# define ACTIVE_COLOR 2
+# define NEW_COLOR 3
 
 typedef struct			s_player
 {
@@ -50,6 +55,7 @@ typedef struct			s_process
 	*/
 	unsigned int		said_alive;
 	t_args				args;
+	char				isn_empty;
 	struct s_process	*prev;
 	struct s_process	*next;
 }						t_process;
@@ -110,11 +116,19 @@ int    					transfer(int amount, int pc);
 t_args            		get_op(int pc, t_args command);
 void					print_field(void);
 t_args					clean_arg();
+t_args            		error_small(t_args command, char *str);
+t_args            		error_big(t_args command, char *str);
+t_args            		reg(t_args command, int* temp);
+
+void					init_graphic(void);
+char 					print_hand(t_process *pr, int i);
+
 
 unsigned char 			g_field[4096];
 int 					g_winner;
 int						g_to_die;
 t_action 				action[17];
+char 					g_graphic_flag;
 
 
 #endif

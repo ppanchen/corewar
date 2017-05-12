@@ -82,6 +82,7 @@ t_process	*cpy_process(t_process *process)
 	new_pr->said_alive = 0;
 	new_pr->op_code = 0;
 	new_pr->delay = 0;
+	new_pr->isn_empty = 0;
 	new_pr->next = 0;
 	new_pr->prev = 0;
 	return (new_pr);

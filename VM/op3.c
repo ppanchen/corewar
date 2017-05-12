@@ -18,9 +18,10 @@ int 					ft_lld(t_process *process, t_player *player)
 	char 	r;
 
 	(void *)player;
-	op = find_op(process->args.op_code);
+	op = find_op(process->op_code);
 	if ((r = fill_check_pr(process, op)))
 	{
+		process->args = parse_op(process->pc);
 		if (!process->args.error)
 		{
 			process->reg[process->args.arg[1] - 1] = process->args.arg[0];
@@ -40,9 +41,10 @@ int 					ft_lldi(t_process *process, t_player *player)
 	int 	pc;
 
 	(void *)player;
-	op = find_op(process->args.op_code);
+	op = find_op(process->op_code);
 	if ((r = fill_check_pr(process, op)))
 	{
+		process->args = parse_op(process->pc);
 		if (!process->args.error)
 		{
 			c_bite = c_bite_to_str(process->args.coding_byte);
@@ -69,14 +71,19 @@ int						ft_lfork(t_process *process, t_player *player)
 	char			r;
 	t_process		*new_pr;
 
-	(void *)player;
-	op = find_op(process->args.op_code);
+	op = find_op(process->op_code);
 	if ((r = fill_check_pr(process, op)))
 	{
+		process->args = parse_op(process->pc);
 		if (!process->args.error)
 		{
 			new_pr = cpy_process(process);
 			new_pr->pc += new_pr->args.arg[0];
+			new_pr->op_code = g_field[new_pr->pc];
+			if (new_pr->op_code <= 0 || new_pr->op_code > 16)
+				new_pr->pc++;
+			else
+				action[new_pr->args.op_code - 1](new_pr, player);
 			shift_list(new_pr, find_start(process));
 		}
 		process->pc += process->args.skip;
@@ -91,9 +98,10 @@ int						ft_aff(t_process *process, t_player *player)
 	char			r;
 
 	(void *)player;
-	op = find_op(process->args.op_code);
+	op = find_op(process->op_code);
 	if ((r = fill_check_pr(process, op)))
 	{
+		process->args = parse_op(process->pc);
 		if (!process->args.error)
 		{
 			ft_printf("%uc", process->reg[process->args.arg[0] - 1] % 256);

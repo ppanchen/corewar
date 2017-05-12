@@ -97,8 +97,11 @@ int main(int argc, char **argv)
 	champs[0].players = sum;
 	if (argc >= 2)
 		ft_division(argv, champs);
+	g_graphic_flag = 1;
+	init_graphic();
 	place_players(champs);
 	run_processes(champs);
-	ft_printf("%i\n", g_winner);
-//	print_field();
+	endwin();
+	return (0);
+//	ft_printf("%i\n", g_winner);
 }

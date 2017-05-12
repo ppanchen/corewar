@@ -14,14 +14,23 @@
 
 t_args			parse_op(int pc)
 {
-	t_args command;
+	t_args	command;
+	char	*str;
 
 	command = clean_arg();
 	command = get_op(pc, command);
-	if (command.op_code > 17 || command.op_code == 0)
-		command.error = 1;
 	if (command.error > 0)
+	{
+		str = ft_itoa_base_uup((int)command.coding_byte, 2);
+		command = error_small(command, str);
+		command = error_big(command, str);
+		free(str);
+	}
+	if (command.op_code > 17 || command.op_code < 0)
+	{
+		command.error = 1;
 		command.skip = 1;
+	}
 	return (command);
 }
 

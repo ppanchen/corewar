@@ -18,9 +18,10 @@ int						ft_add(t_process *process, t_player *player)
 	char 	r;
 
 	(void *)player;
-	op = find_op(process->args.op_code);
+	op = find_op(process->op_code);
 	if ((r = fill_check_pr(process, op)))
 	{
+		process->args = parse_op(process->pc);
 		if (!process->args.error)
 		{
 			process->reg[process->args.arg[2]] =
@@ -41,9 +42,10 @@ int						ft_sub(t_process *process, t_player *player)
 	char 	r;
 
 	(void *)player;
-	op = find_op(process->args.op_code);
+	op = find_op(process->op_code);
 	if ((r = fill_check_pr(process, op)))
 	{
+		process->args = parse_op(process->pc);
 		if (!process->args.error)
 		{
 			process->reg[process->args.arg[2]] =
@@ -64,9 +66,10 @@ int						ft_and(t_process *process, t_player *player)
 	char 	r;
 
 	(void *)player;
-	op = find_op(process->args.op_code);
+	op = find_op(process->op_code);
 	if ((r = fill_check_pr(process, op)))
 	{
+		process->args = parse_op(process->pc);
 		if (!process->args.error)
 		{
 			process->reg[process->args.arg[2]] = process->args.arg[0] &
@@ -86,9 +89,10 @@ int						ft_or(t_process *process, t_player *player)
 	char 	r;
 
 	(void *)player;
-	op = find_op(process->args.op_code);
+	op = find_op(process->op_code);
 	if ((r = fill_check_pr(process, op)))
 	{
+		process->args = parse_op(process->pc);
 		if (!process->args.error)
 		{
 			process->reg[process->args.arg[2]] = process->args.arg[0] |
@@ -108,9 +112,10 @@ int						ft_xor(t_process *process, t_player *player)
 	char 	r;
 
 	(void *)player;
-	op = find_op(process->args.op_code);
+	op = find_op(process->op_code);
 	if ((r = fill_check_pr(process, op)))
 	{
+		process->args = parse_op(process->pc);
 		if (!process->args.error)
 		{
 			process->reg[process->args.arg[2]] = process->args.arg[0] ^
