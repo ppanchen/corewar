@@ -59,23 +59,26 @@ void			run_processes(t_player *player)
 //				while (++j < 7)
 //					ft_printf("%.2x ", g_field[process->pc + j]);
 //				ft_printf("\n");
-				if ((process->op_code <= 0 || process->op_code > 16) && !flag)
-					process->pc++;
+				if ((process->op_code <= 0 || process->op_code > 16)/* && !flag*/)
+					process->pc = ret_pc(process->pc, 1);
 			}
 			if (!(process->op_code <= 0 || process->op_code > 16) &&
  					action[process->op_code - 1](process, player))
 			{
-				flag = 1;
-				continue ;
+//				process->op_code = g_field[process->pc];
+//				if (process->op_code > 0 && process->op_code <= 16)
+					continue ;
 			}
+			flag = 0;
 			if (process->next == 0)
 				break ;
 			process = process->next;
 			n++;
-			flag = 0;
 		}
-//		if (i == 5000)
+//		if (i == 2474)
+//		{
 //			print_field();
+//		}
 		process = find_start(process);
 		(g_graphic_flag) && print_hand(process, i);
 		i++;
@@ -83,5 +86,6 @@ void			run_processes(t_player *player)
 		start = find_start(process);
 		process = start;
 	}
+	ft_printf("i = %d\n", i);
 //	print_field();
 }

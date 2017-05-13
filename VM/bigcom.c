@@ -80,18 +80,18 @@ t_args			fill_command(int pc, t_args command)
 	if (command.arg[0] == 3)
 	{
 		temp[0] = 2;
-		command.arg[0] = indir(pc, transfer(2, pc + 2), command);
+		command.arg[0] = indir(pc, transfer(2, chk(pc + 2)), command);
 	}
 	else
-		command.arg[0] = transfer(temp[0], pc + 2);
+		command.arg[0] = transfer(temp[0], chk(pc + 2));
 	if (command.arg[1] == 3)
 	{
 		temp[1] = 2;
-		command.arg[1] = indir(pc, transfer(2, pc + temp[0] + 2), command);
+		command.arg[1] = indir(pc, transfer(2, chk(pc + temp[0] + 2)), command);
 	}
 	else
-		command.arg[1] = transfer(temp[1], pc + temp[0] + 2);
-	command.arg[2] = transfer(temp[2], pc + temp[0] + temp[1] + 2);
+		command.arg[1] = transfer(temp[1], chk(pc + temp[0] + 2));
+	command.arg[2] = transfer(temp[2], chk(pc + temp[0] + temp[1] + 2));
 	command.skip = temp[0] + temp[1] + temp[2] + 2;
 	command = reg(command, temp);
 	return (command);
@@ -101,15 +101,15 @@ t_args			ld_manage(int pc, t_args command, char *str)
 {
 	if (str[1] == '0')
 	{
-		command.arg[0] = transfer(4, pc + 2);
-		command.arg[1] = g_field[pc + 6];
+		command.arg[0] = transfer(4, chk(pc + 2));
+		command.arg[1] = g_field[chk(pc + 6)];
 		command.skip = 7;
 		command.error += (command.arg[1] > 16 || command.arg[1] == 0) ? 2 : 0;
 	}
 	else
 	{
-		command.arg[0] = indir(pc, transfer(2, pc + 2), command);
-		command.arg[1] = g_field[pc + 4];
+		command.arg[0] = indir(pc, transfer(2, chk(pc + 2)), command);
+		command.arg[1] = g_field[chk(pc + 4)];
 		command.skip = 5;
 		command.error += (command.arg[1] > 16 || command.arg[1] == 0) ? 2 : 0;
 	}

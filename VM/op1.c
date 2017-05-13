@@ -24,13 +24,13 @@ int						ft_add(t_process *process, t_player *player)
 		process->args = parse_op(process->pc);
 		if (!process->args.error)
 		{
-			process->reg[process->args.arg[2]] =
-					process->reg[process->args.arg[0]] +
-					process->reg[process->args.arg[1]];
-			process->carry_flag = (char) (process->reg[process->args.arg[2]]
+			process->reg[process->args.arg[2] - 1] =
+					process->reg[process->args.arg[0] - 1] +
+					process->reg[process->args.arg[1] - 1];
+			process->carry_flag = (char) (process->reg[process->args.arg[2] - 1]
 										  == 0 ? 1 : 0);
 		}
-		process->pc += process->args.skip;
+		process->pc = ret_pc(process->pc, process->args.skip);
 		process->op_code = 0;
  	}
 	return (r);
@@ -48,13 +48,13 @@ int						ft_sub(t_process *process, t_player *player)
 		process->args = parse_op(process->pc);
 		if (!process->args.error)
 		{
-			process->reg[process->args.arg[2]] =
-					process->reg[process->args.arg[0]] -
-					process->reg[process->args.arg[1]];
-			process->carry_flag = (char) (process->reg[process->args.arg[2]]
+			process->reg[process->args.arg[2] - 1] =
+					process->reg[process->args.arg[0] - 1] -
+					process->reg[process->args.arg[1] - 1];
+			process->carry_flag = (char) (process->reg[process->args.arg[2] - 1]
 										  == 0 ? 1 : 0);
 		}
-		process->pc += process->args.skip;
+		process->pc = ret_pc(process->pc, process->args.skip);
 		process->op_code = 0;
 	}
 	return (r);
@@ -72,12 +72,12 @@ int						ft_and(t_process *process, t_player *player)
 		process->args = parse_op(process->pc);
 		if (!process->args.error)
 		{
-			process->reg[process->args.arg[2]] = process->args.arg[0] &
+			process->reg[process->args.arg[2] - 1] = process->args.arg[0] &
 												 process->args.arg[1];
-			process->carry_flag = (char) (process->reg[process->args.arg[2]]
+			process->carry_flag = (char) (process->reg[process->args.arg[2] - 1]
 										  == 0 ? 1 : 0);
 		}
-		process->pc += process->args.skip;
+		process->pc = ret_pc(process->pc, process->args.skip);
 		process->op_code = 0;
 	}
 	return (r);
@@ -95,12 +95,12 @@ int						ft_or(t_process *process, t_player *player)
 		process->args = parse_op(process->pc);
 		if (!process->args.error)
 		{
-			process->reg[process->args.arg[2]] = process->args.arg[0] |
+			process->reg[process->args.arg[2] - 1] = process->args.arg[0] |
 												 process->args.arg[1];
-			process->carry_flag = (char) (process->reg[process->args.arg[2]]
+			process->carry_flag = (char) (process->reg[process->args.arg[2] - 1]
 										  == 0 ? 1 : 0);
 		}
-		process->pc += process->args.skip;
+		process->pc = ret_pc(process->pc, process->args.skip);
 		process->op_code = 0;
 	}
 	return (r);
@@ -118,12 +118,12 @@ int						ft_xor(t_process *process, t_player *player)
 		process->args = parse_op(process->pc);
 		if (!process->args.error)
 		{
-			process->reg[process->args.arg[2]] = process->args.arg[0] ^
+			process->reg[process->args.arg[2] - 1] = process->args.arg[0] ^
 												 process->args.arg[1];
-			process->carry_flag = (char) (process->reg[process->args.arg[2]]
+			process->carry_flag = (char) (process->reg[process->args.arg[2] - 1]
 										  == 0 ? 1 : 0);
 		}
-		process->pc += process->args.skip;
+		process->pc = ret_pc(process->pc, process->args.skip);
 		process->op_code = 0;
 	}
 	return (r);

@@ -54,7 +54,7 @@ int						ft_live(t_process *process, t_player *player)
 				g_winner = process->args.arg[0];
 			process->said_alive++;
 		}
-		process->pc += process->args.skip;
+		process->pc = ret_pc(process->pc, process->args.skip);
 		process->op_code = 0;
 	}
 	return (r);
@@ -75,7 +75,7 @@ int 					ft_ld(t_process *process, t_player *player)
 			process->reg[process->args.arg[1] - 1] = process->args.arg[0];
 			process->carry_flag = (char) (process->args.arg[0] == 0 ? 1 : 0);
 		}
-		process->pc += process->args.skip;
+		process->pc = ret_pc(process->pc, process->args.skip);
 		process->op_code = 0;
 	}
 	return (r);
@@ -107,7 +107,7 @@ int 					ft_st(t_process *process, t_player *player)
 						process->reg[process->args.arg[0] - 1];
 		}
 		process->op_code = 0;
-		process->pc += process->args.skip;
+		process->pc = ret_pc(process->pc, process->args.skip);
 	}
 	return (r);
 }

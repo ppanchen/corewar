@@ -22,17 +22,17 @@ void			place_players(t_player *player)
 	i = -1;
 	coor[0] = 0;
 	if (player[0].players == 2)
-		coor[1] = 2047;
+		coor[1] = 2048;
 	else if (player[0].players == 3)
 	{
-		coor[1] = 1126;
-		coor[2] = 2253;
+		coor[1] = 1127;
+		coor[2] = 2254;
 	}
 	else if (player[0].players == 4)
 	{
-		coor[1] = 1023;
-		coor[2] = 2047;
-		coor[3] = 3071;
+		coor[1] = 1024;
+		coor[2] = 2048;
+		coor[3] = 3072;
 	}
 	coor[4] = 0;
 	while (++i < player[0].players && (j = -1))

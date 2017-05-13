@@ -12,6 +12,13 @@
 
 #include "vm.h"
 
+int				chk(int pc)
+{
+	if (pc >= 4096)
+		pc -= 4096;
+	return (pc);
+}
+
 t_args			parse_op(int pc)
 {
 	t_args	command;
