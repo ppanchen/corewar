@@ -26,6 +26,8 @@ int						ft_zjmp(t_process *process, t_player *player)
 		{
 			if (process->carry_flag == 1)                        //can be a mistake
 				process->pc = ret_pc(process->pc, (short)process->args.arg[0]);
+			else
+				process->pc = ret_pc(process->pc, process->args.skip);
 		}
 		process->op_code = 0;
 	}

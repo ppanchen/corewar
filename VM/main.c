@@ -85,23 +85,16 @@ void    ft_division(char **mass, t_player *champs)
 
 int main(int argc, char **argv)
 {
-	int         sum;
-	int         i;
-	t_player    *champs;
-	int 		k = -1;			//for debug
+	t_player    *player;
 
-	i = 0;
-	if (argc >= 2)
-		sum = ft_count_champs(argv, 0);
-	champs = (t_player*)malloc(sizeof(t_player) * sum);
-	champs[0].players = sum;
-	if (argc >= 2)
-		ft_division(argv, champs);
-	g_graphic_flag = 1;
-	init_graphic();
-	place_players(champs);
-	run_processes(champs);
-	endwin();
+    player = 0;
+    find_flag(argv, argc);
+    player = fill_player(argv, argc);
+    if (g_graphic_flag)
+        init_graphic();
+	place_players(player);
+	run_processes(player);
+    if (g_graphic_flag)
+        endwin();
 	return (0);
-//	ft_printf("%i\n", g_winner);
 }

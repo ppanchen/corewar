@@ -80,7 +80,7 @@ int						ft_lldi(t_process *process, t_player *player);
 int						ft_lfork(t_process *process, t_player *player);
 int						ft_aff(t_process *process, t_player *player);
 
-t_player				*read_player(char *file);
+//t_player				*read_player(char *file);
 t_process				*fill_process(t_player *player);
 void    				ft_magic(int fd, int j, t_player *champs);
 void    				ft_name(int fd, int j, t_player *champs);
@@ -104,6 +104,11 @@ void					place_on_field(unsigned char *str, int pc);
 char 					*c_bite_to_str(int coding_bite);
 t_process				*shift_list(t_process *first, t_process *start);
 t_process				*cpy_process(t_process *process);
+void                    ft_division(char **mass, t_player *champs);
+t_player                *fill_player(char **argv, int argc);
+void                    find_flag(char **argv, int argc);
+void                    show_usage();
+
 
 t_args					bigcom(int pc, t_args command, char *str);
 t_args					second_b(int pc, t_args command, char *str, int i);
@@ -131,6 +136,7 @@ int 					g_winner;
 int						g_to_die;
 t_action 				action[17];
 char 					g_graphic_flag;
+int                     g_show_map_flag;
 
 
 #endif

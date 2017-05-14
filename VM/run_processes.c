@@ -75,10 +75,8 @@ void			run_processes(t_player *player)
 			process = process->next;
 			n++;
 		}
-//		if (i == 2474)
-//		{
-//			print_field();
-//		}
+		if (g_show_map_flag && g_show_map_flag == i)
+			print_field();
 		process = find_start(process);
 		(g_graphic_flag) && print_hand(process, i);
 		i++;
