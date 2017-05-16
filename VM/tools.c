@@ -72,7 +72,7 @@ char			*c_bite_to_str(int coding_bite)
 	return (str);
 }
 
-void			print_field(void)
+int			print_field(void)
 {
 	int i;
 	int j;
@@ -81,13 +81,19 @@ void			print_field(void)
 	while (i < 64)
 	{
 		j = 0;
-		ft_printf("%#.4x : ", i * 64);
+		if (!g_graphic_flag)
+			ft_printf("%#.4x : ", i * 64);
 		while (j < 64)
 		{
-			ft_printf("%.2x ", g_field[j + i * 64]);
+			if (!g_graphic_flag)
+				ft_printf("%.2x ", g_field[j + i * 64]);
+			else
+				mvprintw(i, j * 3, "%.2x ", g_field[j + i * 64]);
 			j++;
 		}
-		ft_printf("\n");
+		if (!g_graphic_flag)
+			ft_printf("\n");
 		i++;
 	}
+	return (1);
 }

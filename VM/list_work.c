@@ -33,13 +33,13 @@ t_process		*fill_process3(t_process *start)
 	second = (t_process *)malloc(sizeof(t_process));
 	ft_bzero(second, sizeof(t_process));
 	second->reg[0] = -2;
-	second->pc = 1127;
+	second->pc = 1301;
 	second->prev = start;
 	start->next = second;
 	third = (t_process *)malloc(sizeof(t_process));
 	ft_bzero(third, sizeof(t_process));
 	third->reg[0] = -3;
-	third->pc = 2254;
+	third->pc = 2602;
 	third->prev = second;
 	second->next = third;
 	return (start);

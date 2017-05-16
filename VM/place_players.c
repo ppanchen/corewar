@@ -25,8 +25,8 @@ void			place_players(t_player *player)
 		coor[1] = 2048;
 	else if (player[0].players == 3)
 	{
-		coor[1] = 1127;
-		coor[2] = 2254;
+		coor[1] = 1301;
+		coor[2] = 2602;
 	}
 	else if (player[0].players == 4)
 	{

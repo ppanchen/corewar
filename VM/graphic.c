@@ -26,7 +26,7 @@ void	init_graphic(void)
 	refresh();
 }
 
-char 	is_pc(t_process *process, int pc)
+char	is_pc(t_process *process, int pc)
 {
 	while (process)
 	{
@@ -37,49 +37,50 @@ char 	is_pc(t_process *process, int pc)
 	return (0);
 }
 
-void	print_field_gr(t_process *process, unsigned char *old_field, int k)
+int		*print_field_gr(t_process *process, unsigned char *old_field,
+						int k, int **was_pc)
 {
 	int i;
 	int j;
+	int *new_pc;
+	int z;
 
-	clear();
-	i = 0;
-	while (i < 64)
-	{
-		j = 0;
-		while (j < 64)
-		{
+	i = -1;
+	z = 0;
+	new_pc = (int *)malloc((count_process(process) + 1) * sizeof(int));
+	new_pc[count_process(process)] = -1;
+	while (++i < 64 && (j = -1))
+		while (++j < 64)
 			if (is_pc(process, j + i * 64))
+			{
 				attron(COLOR_PAIR(ACTIVE_COLOR));
-			if (old_field[j + i * 64] != g_field[j + i * 64])
-				attron(COLOR_PAIR(NEW_COLOR));
-			printw("%.2x ", g_field[j + i * 64]);
-			attron(COLOR_PAIR(MAIN_COLOR));
-			j++;
-		}
-		attron(COLOR_PAIR(MAIN_COLOR));
-		printw("\n");
-		i++;
-	}
+				mvprintw(i, 3 * j, "%.2x", g_field[j + i * 64]);
+				new_pc[z++] = j + i * 64;
+			}
+			else if (old_field[j + i * 64] != g_field[j + i * 64] ||
+					find_pc_in_arr(*was_pc, j + i * 64) != -1 &&
+							!attron(COLOR_PAIR(MAIN_COLOR)))
+				mvprintw(i, 3 * j, "%.2x ", g_field[j + i * 64]);
+	ft_memdel((void **)was_pc);
 	attron(COLOR_PAIR(MAIN_COLOR));
-	printw("i = %d", k);
+	mvprintw(64, 0, "i = % 6d | processes = % 6d", k, count_process(process));
+	return (new_pc);
 }
 
-char 	print_hand(t_process *process, int i)
+char	print_hand(t_process *process, int i)
 {
-	static int		key = 0;
-	static char		flag = 0;
-	static unsigned  char 	field[4096];
-	int				j;
+	static int				key = 0;
+	static char				flag = 0;
+	static unsigned char	field[4096];
+	int						j;
+	static int				*arr = 0;
 
-	print_field_gr(process, field, i);
+	(arr == 0) && (print_field());
+	arr = print_field_gr(process, field, i, &arr);
 	if (flag == 0 || key == 31)
 	{
-		while (key != 32 && key != 's')
-		{
-			flag = 1;
+		while (key != 32 && key != 's' && (flag = 1))
 			key = getch();
-		}
 		if (key == (int)'s')
 		{
 			flag = 0;

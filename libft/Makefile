@@ -17,7 +17,7 @@ SRC = ft_memset.c		ft_bzero.c		ft_memcpy.c		ft_memccpy.c	ft_memmove.c				    \
 	  ft_printf/ft_printf.c				ft_printf/ft_printf_parser.c	ft_printf/paste_arg.c           \
 	  ft_printf/UHandlers/unicode_chars.c               ft_printf/UHandlers/utools.c                    \
 	  ft_printf/UHandlers/wchar_paste.c ft_printf/Handlers/flags_handler2.c                             \
-	  count_chars.c     ft_arrdel.c     ft_arrrev.c     ft_arrsize.c
+	  count_chars.c     ft_arrdel.c     ft_arrrev.c     ft_arrsize.c    find_in_arr.c
 
 OBJ = $(SRC:.c=.o)
 

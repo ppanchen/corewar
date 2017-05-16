@@ -108,6 +108,7 @@ int					ft_pow(int num, int p);
 int					ft_printf(const char *format, ...);
 int					count_chars(char *str, char c);
 int					ft_arrsize(void **arr);
+int					find_in_arr(int *arr, int arr_len, int val);
 
 
 #endif

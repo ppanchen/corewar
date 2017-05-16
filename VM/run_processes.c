@@ -12,11 +12,17 @@
 
 #include "vm.h"
 
-char 			empty_procces(t_process pr)
+int 			count_process(t_process *pr)
 {
-	if (pr.op_code == 0 && pr.delay == 0)
-		return (1);
-	return (0);
+	int i;
+
+	i = 0;
+	while (pr)
+	{
+		i++;
+		pr = pr->next;
+	}
+	return (i);
 }
 
 t_args			clean_arg()
@@ -76,7 +82,10 @@ void			run_processes(t_player *player)
 			n++;
 		}
 		if (g_show_map_flag && g_show_map_flag == i)
+		{
 			print_field();
+			exit(1);
+		}
 		process = find_start(process);
 		(g_graphic_flag) && print_hand(process, i);
 		i++;

@@ -108,6 +108,9 @@ void                    ft_division(char **mass, t_player *champs);
 t_player                *fill_player(char **argv, int argc);
 void                    find_flag(char **argv, int argc);
 void                    show_usage();
+int 					count_process(t_process *pr);
+int						find_pc_in_arr(int *arr, int val);
+int						print_field(void);
 
 
 t_args					bigcom(int pc, t_args command, char *str);
@@ -119,13 +122,13 @@ int						indir(int pc, int tns, t_args command);
 t_args					parse_st(int pc, t_args command, char *str, int i);
 int						transfer(int amount, int pc);
 t_args					get_op(int pc, t_args command);
-void					print_field(void);
 t_args					clean_arg();
 t_args					error_small(t_args command, char *str);
 t_args					error_big(t_args command, char *str);
 t_args					reg(t_args command, int* temp);
 int						chk(int    pc);
 int						s(int trans, int temp);
+
 
 void					init_graphic(void);
 char 					print_hand(t_process *pr, int i);
