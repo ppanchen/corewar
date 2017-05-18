@@ -22,7 +22,8 @@ void    ft_magic(int fd, int j, t_player *champs)
 
 	num = arr;
 	i = 0;
-	read(fd, mass, 4);
+	if (read(fd, mass, 4) < 4)
+		exit(ft_printf("Error: File №%d is too small to be a champion\n", j));
 	while (i < 4)
 	{
 		arr[3-i] = mass[i];
@@ -33,7 +34,9 @@ void    ft_magic(int fd, int j, t_player *champs)
 
 void    ft_name(int fd, int j, t_player *champs)
 {
-	read(fd, champs[j].name, 128);
+	if (read(fd, champs[j].name, 128) < 128)
+			exit(ft_printf("Error: File №%d "
+								"is too small to be a champion\n", j));
 	champs[j].name[128] = 0;
 }
 
@@ -46,7 +49,8 @@ void    ft_prog_size(int fd, int j, t_player *champs)
 
 	num = arr;
 	i = 0;
-	read(fd, mass, 4);
+	if (read(fd, mass, 4) < 4)
+		exit(ft_printf("Error: File №%d is too small to be a champion\n", j));
 	while (i < 4)
 	{
 		arr[3 - i] = mass[i];
@@ -59,26 +63,26 @@ void    ft_division(char **mass, t_player *champs)
 {
 	int fd;
 	int i;
-	int len;
-	char *tmp;
 	int j;
 
 	j = -1;
-	i = 0;
+	i = 1;
 	while (mass[i])
 	{
-		len = (int)ft_strlen(mass[i]);
-		if (len >= 5)
+		if (ft_strcmp(mass[i], "-n") != 0 && ft_strcmp(mass[i], "-d") != 0
+			&& ft_strcmp(mass[i], "-v") != 0)
 		{
-			tmp = mass[i];
-			tmp = tmp + len - 4;
-			if (ft_strcmp(tmp, ".cor") == 0)
+			j = j + 1;
+			fd = open(mass[i], O_RDONLY);
+			if (fd == -1)
 			{
-				j = j + 1;
-				fd = open(mass[i], O_RDONLY);
-				ft_make_player(fd, j, champs);
+				perror(mass[i]);
+				exit(-1);
 			}
+			ft_make_player(fd, j, champs);
 		}
+		else if (ft_strcmp(mass[i], "-d") == 0)
+			i += 1;
 		i++;
 	}
 }
@@ -95,6 +99,11 @@ int main(int argc, char **argv)
 	place_players(player);
 	run_processes(player);
     if (g_graphic_flag)
-        endwin();
+	{
+		timeout(1000);
+		getch();
+		endwin();
+	}
+	ft_printf("winner is player: %d\n", g_winner);
 	return (0);
 }

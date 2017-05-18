@@ -27,7 +27,7 @@ int				transfer(int amount, int pc)
 		arr[(amount - 1) - i] = g_field[chk(pc + i)];
 	pointer = (int*)arr;
 	ret = *pointer;
-	return (ret);
+	return (amount == 2 ? (short)ret : ret);
 }
 
 t_args			parse_st(int pc, t_args command, char *str, int i)
@@ -45,7 +45,7 @@ t_args			parse_st(int pc, t_args command, char *str, int i)
 	{
 		command.error = 0;
 		command.arg[0] = g_field[chk(pc + 2)];
-		command.arg[1] = transfer(2, chk(pc + 3));
+		command.arg[1] = (short)transfer(2, chk(pc + 3));
 		command.skip = 5;
 		command.error += (command.arg[0] > 16 || command.arg[0] == 0) ? 2 : 0;
 	}

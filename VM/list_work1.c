@@ -54,7 +54,8 @@ void			check_process(t_process **process)
 	if (g_graphic_flag )
 		mvprintw(64, 126, " CYCLE_TO_DIE: % 4d | count_of_deltas: % 3d | "
 					   "count_of_cycles: % 2d ", CYCLE_TO_DIE - CYCLE_DELTA
-						* count_of_delta, count_of_delta, count_of_cycles);
+						* count_of_delta > 0 ? CYCLE_TO_DIE - CYCLE_DELTA *
+					  count_of_delta : 0, count_of_delta, count_of_cycles);
 	if (to_die == 0)
 	{
 		if (count_of_alives_kill(process) > NBR_LIVE
@@ -65,7 +66,8 @@ void			check_process(t_process **process)
 		}
 		else
 			count_of_cycles++;
-		to_die = CYCLE_TO_DIE - CYCLE_DELTA * count_of_delta - 1;
+		to_die = CYCLE_TO_DIE - CYCLE_DELTA * count_of_delta - 1 > 0 ?
+				 CYCLE_TO_DIE - CYCLE_DELTA * count_of_delta - 1 : 0;
 	}
 	else
 		to_die--;

@@ -12,31 +12,38 @@
 
 #include "vm.h"
 
-int ft_find_cor(char *s, int sum)
-{
-	int len;
-	char *tmp;
+//int ft_find_cor(char *s, int sum)
+//{
+//	int len;
+//	char *tmp;
+//
+//	len = (int)ft_strlen(s);
+//	if (len >= 5)
+//	{
+//		tmp = s;
+//		tmp = tmp + len - 4;
+//		if (ft_strcmp(tmp, ".cor") == 0)
+//			sum++;
+//	}
+//	return (sum);
+//}
 
-	len = (int)ft_strlen(s);
-	if (len >= 5)
-	{
-		tmp = s;
-		tmp = tmp + len - 4;
-		if (ft_strcmp(tmp, ".cor") == 0)
-			sum++;
-	}
-	return (sum);
-}
-
-int   ft_count_champs(char **mass, int sum)
+int   ft_count_champs(char **mass, int sum, int argc)
 {
 	int i;
 
-	i = 0;
-	while(mass[i])
+	i = 1;
+	while(i < argc)
 	{
-		sum = ft_find_cor(mass[i], sum);
-		i++;
+		if (ft_strcmp(mass[i], "-n") == 0 || ft_strcmp(mass[i], "-v") == 0)
+			i += 1;
+		else if (ft_strcmp(mass[i], "-d") == 0)
+			i += 2;
+		else
+		{
+			i++;
+			sum++;
+		}
 	}
 	return (sum);
 }
@@ -48,15 +55,20 @@ void    ft_make_player(int fd, int j, t_player *champs)
 
 	ft_magic(fd, j, champs);
 	ft_name(fd, j, champs);
-	read(fd, extra, 4);
+	if (read(fd, extra, 4) < 4)
+		exit(ft_printf("Error: File №%d is too small to be a champion\n", j));
 	ft_prog_size(fd, j, champs);
 	ft_comment_code(fd, j, champs);
 	champs[j].index = -(j + 1);
+	if (champs[j].code_size > CHAMP_MAX_SIZE ||
+			champs[j].magic != COREWAR_EXEC_MAGIC)
+		exit(ft_printf("There is some error in player №%d\n", j + 1));
 }
 
 void    ft_comment_code(int fd, int j, t_player *champs)
 {
-	read(fd, champs[j].comment, 2052);
+	if (read(fd, champs[j].comment, 2052) < 2052)
+		exit(ft_printf("Error: File №%d is too small to be a champion\n", j));
 	champs[j].comment[2048] = 0;
 	read(fd, champs[j].code, 682);
 	champs[j].code[682] = 0;

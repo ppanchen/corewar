@@ -56,12 +56,13 @@ typedef struct			s_process
 	unsigned int		said_alive;
 	t_args				args;
 	char				isn_empty;
+	int 				process_num;
 	struct s_process	*prev;
 	struct s_process	*next;
 }						t_process;
 
 
-
+char 					make_op(t_process *process, t_player *player);
 typedef int				(* t_action)(t_process *process, t_player *player);
 int						ft_live(t_process *process, t_player *player);
 int						ft_ld(t_process *process, t_player *player);
@@ -86,7 +87,7 @@ void    				ft_magic(int fd, int j, t_player *champs);
 void    				ft_name(int fd, int j, t_player *champs);
 void    				ft_prog_size(int fd, int j, t_player *champs);
 void    				ft_comment_code(int fd, int j, t_player *champs);
-int   					ft_count_champs(char **mass, int sum);
+int   					ft_count_champs(char **mass, int sum, int argc);
 void    				ft_make_player(int fd, int j, t_player *champs);
 void					run_processes(t_player *player);
 void					place_players(t_player *player);
@@ -111,6 +112,8 @@ void                    show_usage();
 int 					count_process(t_process *pr);
 int						find_pc_in_arr(int *arr, int val);
 int						print_field(void);
+int 					ret_next_num(t_process *process);
+
 
 
 t_args					bigcom(int pc, t_args command, char *str);
@@ -132,6 +135,8 @@ int						s(int trans, int temp);
 
 void					init_graphic(void);
 char 					print_hand(t_process *pr, int i);
+int						print_info(t_process *process);
+
 
 
 unsigned char 			g_field[4096];
@@ -140,6 +145,7 @@ int						g_to_die;
 t_action 				action[17];
 char 					g_graphic_flag;
 int                     g_show_map_flag;
+char 					g_debug_flag;
 
 
 #endif

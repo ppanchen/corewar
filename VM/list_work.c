@@ -79,13 +79,25 @@ t_process		*fill_process(t_player *player)
 	pr = (t_process *)malloc(sizeof(t_process));
 	ft_bzero(pr, sizeof(t_process));
 	pr->reg[0] = -1;
-
+	pr->process_num = 1;
 	if (player[0].players == 2)
+	{
 		pr = fill_process2(pr);
+		pr->next->process_num = 2;
+	}
 	else if (player[0].players == 3)
+	{
 		pr = fill_process3(pr);
+		pr->next->process_num = 2;
+		pr->next->next->process_num = 3;
+	}
 	else if (player[0].players == 4)
+	{
 		pr = fill_process4(pr);
+		pr->next->process_num = 2;
+		pr->next->next->process_num = 3;
+		pr->next->next->next->process_num = 4;
+	}
 	return (pr);
 }
 

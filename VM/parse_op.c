@@ -47,17 +47,17 @@ int				indir(int pc, int tns, t_args command)
 
 	if (command.op_code == 13 || command.op_code == 14)
 	{
-		ret = pc + tns;
+		ret = pc + (short)tns;
 		if (ret >= 4096)
 			ret -= 4096;
-		ret = transfer(2, ret);
+		ret = (short)transfer(2, ret);
 	}
 	else
 	{
-		ret = pc + (tns % IDX_MOD);
+		ret = pc + ((short)tns % IDX_MOD);
 		if (ret >= 4096)
 			ret -= 4096;
-		ret = transfer(2, ret);
+		ret = (short)transfer(2, ret);
 	}
 	return (ret);
 }

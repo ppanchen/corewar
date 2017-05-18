@@ -22,7 +22,7 @@ void	init_graphic(void)
 	init_pair(MAIN_COLOR, COLOR_YELLOW, COLOR_BLACK);
 	init_pair(ACTIVE_COLOR, COLOR_BLACK, COLOR_YELLOW);
 	init_pair(NEW_COLOR, COLOR_BLUE, COLOR_BLACK);
-	timeout(100);
+	timeout(1);
 	refresh();
 }
 
@@ -57,8 +57,8 @@ int		*print_field_gr(t_process *process, unsigned char *old_field,
 				mvprintw(i, 3 * j, "%.2x", g_field[j + i * 64]);
 				new_pc[z++] = j + i * 64;
 			}
-			else if (old_field[j + i * 64] != g_field[j + i * 64] ||
-					find_pc_in_arr(*was_pc, j + i * 64) != -1 &&
+			else if ((old_field[j + i * 64] != g_field[j + i * 64] ||
+					find_pc_in_arr(*was_pc, j + i * 64) != -1) &&
 							!attron(COLOR_PAIR(MAIN_COLOR)))
 				mvprintw(i, 3 * j, "%.2x ", g_field[j + i * 64]);
 	ft_memdel((void **)was_pc);
@@ -93,4 +93,30 @@ char	print_hand(t_process *process, int i)
 	while (++j < 4096)
 		field[j] = g_field[j];
 	return (0);
+}
+
+int		print_info(t_process *process)
+{
+	char	*code_bite;
+	int 	i;
+	int 	args_len;
+
+	args_len = op_tab[process->op_code - 1].args_len;
+	code_bite = c_bite_to_str(process->args.coding_byte);
+	ft_printf("P% 5d | %s ", process->process_num,
+				  op_tab[process->op_code - 1].name);
+	i = -1;
+	while (++i < args_len && process->args.coding_byte)
+	{
+		if (code_bite[0 + i * 2] == '0' && code_bite[1 + i * 2] == '1')
+			ft_printf("r%i", process->args.arg[i]);
+		else if (code_bite[0 + i * 2] == '1' && code_bite[1 + i * 2] == '0')
+			ft_printf("%%%i", process->args.arg[i]);
+		else if (code_bite[0 + i * 2] == '1' && code_bite[1 + i * 2] == '1')
+			ft_printf("%d", process->args.arg[i]);
+		i + 1 != args_len ? ft_printf(" ") : 1;
+	}
+	if (!process->args.coding_byte)
+		ft_printf("%d", process->args.arg[0]);
+	return (1);
 }
