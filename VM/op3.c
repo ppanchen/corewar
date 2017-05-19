@@ -34,8 +34,6 @@ int 					ft_lldi(t_process *process, t_player *player)
 	if (!process->args.error)
 	{
 		c_bite = c_bite_to_str(process->args.coding_byte);
-		process->args.arg[0] = (short)process->args.arg[0];
-		process->args.arg[1] = (short)process->args.arg[1];
 		if (c_bite[0] == '0' && c_bite[1] == '1')
 			process->args.arg[0] =
 					process->reg[process->args.arg[0] - 1];
@@ -60,6 +58,7 @@ int						ft_lfork(t_process *process, t_player *player)
 	{
 		new_pr = cpy_process(process);
 		new_pr->pc = ret_pc(new_pr->pc, (short)new_pr->args.arg[0]);
+		(g_debug_flag) ? printf(" (%i)", new_pr->pc) : 0;
 		new_pr->op_code = g_field[new_pr->pc];
 		new_pr->process_num = ret_next_num(process);
 		if (new_pr->op_code <= 0 || new_pr->op_code > 16)

@@ -12,22 +12,6 @@
 
 #include "vm.h"
 
-//int ft_find_cor(char *s, int sum)
-//{
-//	int len;
-//	char *tmp;
-//
-//	len = (int)ft_strlen(s);
-//	if (len >= 5)
-//	{
-//		tmp = s;
-//		tmp = tmp + len - 4;
-//		if (ft_strcmp(tmp, ".cor") == 0)
-//			sum++;
-//	}
-//	return (sum);
-//}
-
 int   ft_count_champs(char **mass, int sum, int argc)
 {
 	int i;

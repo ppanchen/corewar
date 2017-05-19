@@ -20,6 +20,7 @@ int						ft_add(t_process *process, t_player *player)
 		process->reg[process->args.arg[2] - 1] =
 				process->reg[process->args.arg[0] - 1] +
 				process->reg[process->args.arg[1] - 1];
+
 		process->carry_flag = (char) (process->reg[process->args.arg[2] - 1]
 									  == 0 ? 1 : 0);
 	}
@@ -36,6 +37,10 @@ int						ft_sub(t_process *process, t_player *player)
 		process->reg[process->args.arg[2] - 1] =
 				process->reg[process->args.arg[0] - 1] -
 				process->reg[process->args.arg[1] - 1];
+//		(g_debug_flag) ? printf("\n       | %i %i %i",
+//							process->reg[process->args.arg[0] - 1],
+//							process->reg[process->args.arg[1] - 1],
+//							process->reg[process->args.arg[2] - 1]) : 0;
 		process->carry_flag = (char) (process->reg[process->args.arg[2] - 1]
 									  == 0 ? 1 : 0);
 	}
@@ -46,12 +51,23 @@ int						ft_sub(t_process *process, t_player *player)
 
 int						ft_and(t_process *process, t_player *player)
 {
+	char *c_byte;
+
 	(void *)player;
 	if (!process->args.error)
 	{
-		process->reg[process->args.arg[2] - 1] = process->args.arg[0] & process->args.arg[1];
+		c_byte = c_bite_to_str(process->args.coding_byte);
+		if (c_byte[0] == '0' && c_byte[1] == '1')
+			process->args.arg[0] =
+					process->reg[process->args.arg[0] - 1];
+		if (c_byte[2] == '0' && c_byte[3] == '1')
+			process->args.arg[1] =
+					process->reg[process->args.arg[1] - 1];
+		process->reg[process->args.arg[2] - 1] =
+				process->args.arg[0] & process->args.arg[1];
 		process->carry_flag = (char) (process->reg[process->args.arg[2] - 1]
 									  == 0 ? 1 : 0);
+		ft_memdel((void **)&c_byte);
 	}
 	process->pc = ret_pc(process->pc, process->args.skip);
 	process->op_code = 0;
@@ -60,12 +76,23 @@ int						ft_and(t_process *process, t_player *player)
 
 int						ft_or(t_process *process, t_player *player)
 {
+	char *c_byte;
+
 	(void *)player;
 	if (!process->args.error)
 	{
-		process->reg[process->args.arg[2] - 1] = process->args.arg[0] | process->args.arg[1];
+		c_byte = c_bite_to_str(process->args.coding_byte);
+		if (c_byte[0] == '0' && c_byte[1] == '1')
+			process->args.arg[0] =
+					process->reg[process->args.arg[0] - 1];
+		if (c_byte[2] == '0' && c_byte[3] == '1')
+			process->args.arg[1] =
+					process->reg[process->args.arg[1] - 1];
+		process->reg[process->args.arg[2] - 1] = process->args.arg[0]
+												 | process->args.arg[1];
 		process->carry_flag = (char) (process->reg[process->args.arg[2] - 1]
 									  == 0 ? 1 : 0);
+		ft_memdel((void **)&c_byte);
 	}
 	process->pc = ret_pc(process->pc, process->args.skip);
 	process->op_code = 0;
@@ -74,22 +101,25 @@ int						ft_or(t_process *process, t_player *player)
 
 int						ft_xor(t_process *process, t_player *player)
 {
-	t_op	op;
-	char 	r;
+	char *c_byte;
 
 	(void *)player;
-	if ((r = fill_check_pr(process, op)))
+	process->args = parse_op(process->pc);
+	if (!process->args.error)
 	{
-		process->args = parse_op(process->pc);
-		if (!process->args.error)
-		{
-			process->reg[process->args.arg[2] - 1] = process->args.arg[0] ^
-												 process->args.arg[1];
-			process->carry_flag = (char) (process->reg[process->args.arg[2] - 1]
-										  == 0 ? 1 : 0);
-		}
-		process->pc = ret_pc(process->pc, process->args.skip);
-		process->op_code = 0;
+		c_byte = c_bite_to_str(process->args.coding_byte);
+		if (c_byte[0] == '0' && c_byte[1] == '1')
+			process->args.arg[0] =
+					process->reg[process->args.arg[0] - 1];
+		if (c_byte[2] == '0' && c_byte[3] == '1')
+			process->args.arg[1] =
+					process->reg[process->args.arg[1] - 1];
+		process->reg[process->args.arg[2] - 1] = process->args.arg[0] ^ process->args.arg[1];
+		process->carry_flag = (char) (process->reg[process->args.arg[2] - 1]
+									  == 0 ? 1 : 0);
+		ft_memdel((void **)&c_byte);
 	}
-	return (r);
+	process->pc = ret_pc(process->pc, process->args.skip);
+	process->op_code = 0;
+	return (0);
 }

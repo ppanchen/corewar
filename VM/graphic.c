@@ -103,20 +103,18 @@ int		print_info(t_process *process)
 
 	args_len = op_tab[process->op_code - 1].args_len;
 	code_bite = c_bite_to_str(process->args.coding_byte);
-	ft_printf("P% 5d | %s ", process->process_num,
+	printf("P% 5d | %s ", process->process_num,
 				  op_tab[process->op_code - 1].name);
 	i = -1;
 	while (++i < args_len && process->args.coding_byte)
 	{
 		if (code_bite[0 + i * 2] == '0' && code_bite[1 + i * 2] == '1')
-			ft_printf("r%i", process->args.arg[i]);
-		else if (code_bite[0 + i * 2] == '1' && code_bite[1 + i * 2] == '0')
-			ft_printf("%%%i", process->args.arg[i]);
-		else if (code_bite[0 + i * 2] == '1' && code_bite[1 + i * 2] == '1')
-			ft_printf("%d", process->args.arg[i]);
-		i + 1 != args_len ? ft_printf(" ") : 1;
+			printf("r%i", process->args.arg[i]);
+		else
+			printf("%d", process->args.arg[i]);
+		i + 1 != args_len ? printf(" ") : 1;
 	}
 	if (!process->args.coding_byte)
-		ft_printf("%d", process->args.arg[0]);
+		printf("%d", process->args.arg[0]);
 	return (1);
 }

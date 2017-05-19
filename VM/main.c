@@ -104,6 +104,6 @@ int main(int argc, char **argv)
 		getch();
 		endwin();
 	}
-	ft_printf("winner is player: %d\n", g_winner);
+	printf("winner is player: %d\n", g_winner);
 	return (0);
 }

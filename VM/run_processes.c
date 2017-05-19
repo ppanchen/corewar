@@ -85,6 +85,6 @@ void			run_processes(t_player *player)
 		start = find_start(process);
 		process = start;
 	}
-	ft_printf("i = %d\n", i);
+	printf("i = %d\n", i);
 //	print_field();
 }

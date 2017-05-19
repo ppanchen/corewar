@@ -84,7 +84,7 @@ t_process	*cpy_process(t_process *process)
 		new_pr->reg[i] = process->reg[i];
 	new_pr->args = process->args;
 	new_pr->pc = process->pc;
-	new_pr->carry_flag = 0;
+	new_pr->carry_flag = process->carry_flag;
 	new_pr->said_alive = 0;
 	new_pr->op_code = 0;
 	new_pr->delay = 0;

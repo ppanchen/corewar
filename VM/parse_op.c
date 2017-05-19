@@ -43,21 +43,23 @@ t_args			parse_op(int pc)
 
 int				indir(int pc, int tns, t_args command)
 {
-	int	ret;
+	int		ret;
+	char	am;
 
+	am = (char)(op_tab[command.op_code - 1].direct_len == 1 ? 2 : 4);
 	if (command.op_code == 13 || command.op_code == 14)
 	{
 		ret = pc + (short)tns;
 		if (ret >= 4096)
 			ret -= 4096;
-		ret = (short)transfer(2, ret);
+		ret = transfer(am, ret);
 	}
 	else
 	{
 		ret = pc + ((short)tns % IDX_MOD);
 		if (ret >= 4096)
 			ret -= 4096;
-		ret = (short)transfer(2, ret);
+		ret = transfer(am, ret);
 	}
 	return (ret);
 }

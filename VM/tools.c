@@ -19,6 +19,8 @@ int 	ret_pc(int current, int shift)
 	ret  = current + shift;
 	while (ret >= 4096)
 		ret -= 4096;
+	while (ret < 0)
+		ret += 4096;
 	return (ret);
 }
 

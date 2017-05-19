@@ -52,7 +52,7 @@ char 					make_op(t_process *process, t_player *player)
 		{
 			g_debug_flag ? print_info(process) : 0;
 			action[process->op_code - 1](process, player);
-			g_debug_flag ? ft_printf("\n") : 0;
+			g_debug_flag ? printf("\n") : 0;
 		}
 	}
 	return (r);
