@@ -104,7 +104,6 @@ int						ft_xor(t_process *process, t_player *player)
 	char *c_byte;
 
 	(void *)player;
-	process->args = parse_op(process->pc);
 	if (!process->args.error)
 	{
 		c_byte = c_bite_to_str(process->args.coding_byte);

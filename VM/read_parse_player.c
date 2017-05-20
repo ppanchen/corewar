@@ -19,9 +19,9 @@ int   ft_count_champs(char **mass, int sum, int argc)
 	i = 1;
 	while(i < argc)
 	{
-		if (ft_strcmp(mass[i], "-n") == 0 || ft_strcmp(mass[i], "-v") == 0)
+		if (ft_strcmp(mass[i], "-g") == 0 || ft_strcmp(mass[i], "-v") == 0)
 			i += 1;
-		else if (ft_strcmp(mass[i], "-d") == 0)
+		else if (ft_strcmp(mass[i], "-d") == 0 || !ft_strcmp(mass[i], "-n"))
 			i += 2;
 		else
 		{

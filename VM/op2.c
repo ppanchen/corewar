@@ -19,11 +19,11 @@ int						ft_zjmp(t_process *process, t_player *player)
 	{
 		if (process->carry_flag == 1)
 			process->pc = ret_pc(process->pc, (short)process->args.arg[0]);
-		else
-			process->pc = ret_pc(process->pc, process->args.skip);
 		if (g_debug_flag == 1)
 			(process->carry_flag == 1) ? printf(" OK") : printf(" FAILED");
 	}
+	if (process->carry_flag == 0)
+		process->pc = ret_pc(process->pc, process->args.skip);
 	process->op_code = 0;
 	return (0);
 }
@@ -106,7 +106,7 @@ int						ft_fork(t_process *process, t_player *player)
 	if (!process->args.error)
 	{
 		new_pr = cpy_process(process);
-		new_pr->pc = ret_pc(new_pr->pc, (short)new_pr->args.arg[0] % IDX_MOD);
+		new_pr->pc = ret_pc(new_pr->pc, new_pr->args.arg[0] % IDX_MOD);
 		(g_debug_flag) ? printf(" (%i)", new_pr->pc) : 0;
 		new_pr->op_code = g_field[new_pr->pc];
 		new_pr->process_num = ret_next_num(process);

@@ -21,7 +21,7 @@ t_process		*find_start(t_process *process)
 	return (process);
 }
 
-unsigned int	count_of_alives_kill(t_process **pr)
+unsigned int	count_of_alives_kill(t_process **pr, int kill_flag)
 {
 	unsigned int 	count;
 	unsigned int	cpy;
@@ -35,8 +35,8 @@ unsigned int	count_of_alives_kill(t_process **pr)
 	{
 		count += process->said_alive;
 		cpy = process->said_alive;
-		process->said_alive = 0;
-		if (cpy == 0)
+		process->said_alive = kill_flag == 0 ? cpy : 0;
+		if (cpy == 0 && kill_flag)
 			ret = kill_process(&process);
 		else
 			process = process->next;
@@ -58,7 +58,7 @@ void			check_process(t_process **process)
 					  count_of_delta : 0, count_of_delta, count_of_cycles);
 	if (to_die == 0)
 	{
-		if (count_of_alives_kill(process) > NBR_LIVE
+		if (count_of_alives_kill(process, 1) >= NBR_LIVE
 			|| count_of_cycles == MAX_CHECKS)
 		{
 			count_of_delta++;
@@ -66,8 +66,8 @@ void			check_process(t_process **process)
 		}
 		else
 			count_of_cycles++;
-		to_die = CYCLE_TO_DIE - CYCLE_DELTA * count_of_delta - 1 > 0 ?
-				 CYCLE_TO_DIE - CYCLE_DELTA * count_of_delta - 1 : 0;
+		to_die = CYCLE_TO_DIE - CYCLE_DELTA * count_of_delta  - 1 > 0 ?
+				 CYCLE_TO_DIE - CYCLE_DELTA * count_of_delta  - 1: 0;
 	}
 	else
 		to_die--;

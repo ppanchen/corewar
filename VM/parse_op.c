@@ -19,12 +19,13 @@ int				chk(int pc)
 	return (pc);
 }
 
-t_args			parse_op(int pc)
+t_args			parse_op(int pc, unsigned char op_code)
 {
 	t_args	command;
 	char	*str;
 
 	command = clean_arg();
+	command.op_code = op_code;
 	command = get_op(pc, command);
 	if (command.error > 0)
 	{

@@ -64,14 +64,18 @@ void    ft_division(char **mass, t_player *champs)
 	int fd;
 	int i;
 	int j;
+	int num;
 
 	j = -1;
 	i = 1;
 	while (mass[i])
 	{
-		if (ft_strcmp(mass[i], "-n") != 0 && ft_strcmp(mass[i], "-d") != 0
+		num = 0;
+		if (ft_strcmp(mass[i], "-g") != 0 && ft_strcmp(mass[i], "-d") != 0
 			&& ft_strcmp(mass[i], "-v") != 0)
 		{
+			if (ft_strcmp(mass[i], "-n") == 0)
+				((num = ft_atoi(mass[++i]))) ? i++ : show_usage();
 			j = j + 1;
 			fd = open(mass[i], O_RDONLY);
 			if (fd == -1)
@@ -80,6 +84,7 @@ void    ft_division(char **mass, t_player *champs)
 				exit(-1);
 			}
 			ft_make_player(fd, j, champs);
+			champs[j].pl_num = num ?: 0;
 		}
 		else if (ft_strcmp(mass[i], "-d") == 0)
 			i += 1;

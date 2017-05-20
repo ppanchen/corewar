@@ -31,7 +31,7 @@ void     find_flag(char **argv, int argc)
     g_show_map_flag = 0;
 	g_debug_flag = 0;
     while (++i < argc)
-        if (!ft_strcmp(argv[i], "-n"))
+        if (!ft_strcmp(argv[i], "-g"))
             g_graphic_flag = 1;
     i = 0;
     while (++i < argc)

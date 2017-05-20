@@ -30,6 +30,7 @@ typedef struct			s_player
 	char                comment[2048 + 1];
 	unsigned char		code[682 + 1];
 	int 				index;
+	int 				pl_num;
 	int                 players;
 }                		t_player;
 
@@ -92,7 +93,7 @@ void    				ft_make_player(int fd, int j, t_player *champs);
 void					run_processes(t_player *player);
 void					place_players(t_player *player);
 t_process				*kill_process(t_process **to_del);
-t_args					parse_op(int pc);
+t_args					parse_op(int pc, unsigned char op_code);
 t_process				*find_start(t_process *process);
 t_op 					find_op(char	op_code);
 char					fill_check_pr(t_process	*pr, t_op op);
@@ -113,6 +114,7 @@ int 					count_process(t_process *pr);
 int						find_pc_in_arr(int *arr, int val);
 int						print_field(void);
 int 					ret_next_num(t_process *process);
+unsigned int			count_of_alives_kill(t_process **pr, int kill_flag);
 
 
 

@@ -41,18 +41,22 @@ char					fill_check_pr(t_process	*pr, t_op op)
 
 char 					make_op(t_process *process, t_player *player)
 {
-	t_op	op;
-	char 	r;
+	t_op		op;
+	char		r;
+	t_process	*start;
 
 	op = find_op(process->op_code);
 	if ((r = fill_check_pr(process, op)))
 	{
-		process->args = parse_op(process->pc);
+		process->args = parse_op(process->pc, process->op_code);
 		if (!process->args.error)
 		{
+			start = find_start(process);
 			g_debug_flag ? print_info(process) : 0;
 			action[process->op_code - 1](process, player);
 			g_debug_flag ? printf("\n") : 0;
+			g_graphic_flag ? mvprintw(64, 64, "Alive was said: %i",
+								count_of_alives_kill(&start, 0)) : 0;
 		}
 	}
 	return (r);
