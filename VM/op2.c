@@ -30,8 +30,8 @@ int						ft_zjmp(t_process *process, t_player *player)
 
 int						ft_ldi(t_process *process, t_player *player)
 {
-	char 	*c_bite;
-	int 	pc;
+	char	*c_bite;
+	int		pc;
 
 	(void *)player;
 	if (!process->args.error)
@@ -42,13 +42,13 @@ int						ft_ldi(t_process *process, t_player *player)
 		if (c_bite[2] == '0' && c_bite[3] == '1')
 			process->args.arg[1] = process->reg[process->args.arg[1] - 1];
 		pc = ret_pc(process->pc, (process->args.arg[0] +
-								  process->args.arg[1]) % IDX_MOD);
+								process->args.arg[1]) % IDX_MOD);
 		(g_debug_flag) ? printf("\n       | -> load from %i + %i = %i "
-										   "(with pc and mod %i)",
-								process->args.arg[0], process->args.arg[1],
-								   process->args.arg[0] + process->args.arg[1], pc) : 0;
+						"(with pc and mod %i)",
+						process->args.arg[0], process->args.arg[1],
+						process->args.arg[0] + process->args.arg[1], pc) : 0;
 		process->reg[process->args.arg[2] - 1] = transfer(4, pc);
-		ft_memdel((void **) &c_bite);
+		ft_memdel((void **)&c_bite);
 	}
 	process->pc = ret_pc(process->pc, process->args.skip);
 	process->op_code = 0;
@@ -57,9 +57,9 @@ int						ft_ldi(t_process *process, t_player *player)
 
 int						ft_sti(t_process *process, t_player *player)
 {
-	char 	*c_bite;
-	unsigned char 	*str;
-	int 	pc;
+	char			*c_bite;
+	unsigned char	*str;
+	int				pc;
 
 	(void *)player;
 	if (!process->args.error)
@@ -70,21 +70,21 @@ int						ft_sti(t_process *process, t_player *player)
 		if (c_bite[4] == '0' && c_bite[5] == '1')
 			process->args.arg[2] = process->reg[process->args.arg[2] - 1];
 		pc = ret_pc(process->pc, (process->args.arg[1] +
-								  process->args.arg[2]) % IDX_MOD);
+								process->args.arg[2]) % IDX_MOD);
 		(g_debug_flag) ? printf("\n       | -> store to %i + %i = %i "
-						"(with pc and mod %i)", process->args.arg[1], process->args.arg[2],
-							process->args.arg[1] + process->args.arg[2], pc) : 0;
+			"(with pc and mod %i)", process->args.arg[1], process->args.arg[2],
+			process->args.arg[1] + process->args.arg[2], pc) : 0;
 		str = to_little_endian(process->reg[process->args.arg[0] - 1]);
 		place_on_field(str, pc);
-		ft_memdel((void **) &str);
-		ft_memdel((void **) &c_bite);
+		ft_memdel((void **)&str);
+		ft_memdel((void **)&c_bite);
 	}
 	process->pc = ret_pc(process->pc, process->args.skip);
 	process->op_code = 0;
 	return (0);
 }
 
-int 					ret_next_num(t_process *process)
+int						ret_next_num(t_process *process)
 {
 	int max;
 
@@ -120,4 +120,3 @@ int						ft_fork(t_process *process, t_player *player)
 	process->op_code = 0;
 	return (0);
 }
-

@@ -12,9 +12,9 @@
 
 #include "vm.h"
 
-char 					index_exist(int index, t_player *player)
+char	index_exist(int index, t_player *player)
 {
-	int 	i;
+	int	i;
 
 	i = -1;
 	while (++i < player[0].players)

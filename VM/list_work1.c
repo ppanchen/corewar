@@ -23,7 +23,7 @@ t_process		*find_start(t_process *process)
 
 unsigned int	count_of_alives_kill(t_process **pr, int kill_flag)
 {
-	unsigned int 	count;
+	unsigned int	count;
 	unsigned int	cpy;
 	t_process		*ret;
 	t_process		*process;
@@ -40,7 +40,7 @@ unsigned int	count_of_alives_kill(t_process **pr, int kill_flag)
 			ret = kill_process(&process);
 		else
 			process = process->next;
-		*pr = process ?: ret;
+		*pr = process ? process : ret;
 	}
 	fill_new_pr(find_start(*pr));
 	return (count);
@@ -49,14 +49,13 @@ unsigned int	count_of_alives_kill(t_process **pr, int kill_flag)
 void			check_process(t_process **process)
 {
 	static int		count_of_delta = 0;
-	static int 		to_die = CYCLE_TO_DIE;
-	static int 		count_of_cycles = 0;
+	static int		to_die = CYCLE_TO_DIE;
+	static int		count_of_cycles = 0;
 
-	if (g_graphic_flag )
-		mvprintw(64, 126, " CYCLE_TO_DIE: % 4d | count_of_deltas: % 3d | "
-					   "count_of_cycles: % 2d ", CYCLE_TO_DIE - CYCLE_DELTA
-						* count_of_delta > 0 ? CYCLE_TO_DIE - CYCLE_DELTA *
-					  count_of_delta : 0, count_of_delta, count_of_cycles);
+	(g_graphic_flag) && mvprintw(64, 126, " CYCLE_TO_DIE: % 4d |"
+	" count_of_deltas: % 3d | count_of_cycles: % 2d ", CYCLE_TO_DIE -
+	CYCLE_DELTA * count_of_delta > 0 ? CYCLE_TO_DIE - CYCLE_DELTA *
+	count_of_delta : 0, count_of_delta, count_of_cycles);
 	if (to_die == 0)
 	{
 		if (count_of_alives_kill(process, 1) >= NBR_LIVE
@@ -70,13 +69,13 @@ void			check_process(t_process **process)
 		else
 			count_of_cycles++;
 		to_die = CYCLE_TO_DIE - CYCLE_DELTA * count_of_delta - 1 > 0 ?
-				 CYCLE_TO_DIE - CYCLE_DELTA * count_of_delta - 1 : 0;
+				CYCLE_TO_DIE - CYCLE_DELTA * count_of_delta - 1 : 0;
 	}
 	else
 		to_die--;
 }
 
-t_process	*cpy_process(t_process *process)
+t_process		*cpy_process(t_process *process)
 {
 	int			i;
 	t_process	*new_pr;
@@ -98,7 +97,7 @@ t_process	*cpy_process(t_process *process)
 	return (new_pr);
 }
 
-t_process	*shift_list(t_process *first, t_process *start)
+t_process		*shift_list(t_process *first, t_process *start)
 {
 	first->next = start;
 	start->prev = first;

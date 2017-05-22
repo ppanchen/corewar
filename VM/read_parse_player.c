@@ -12,12 +12,12 @@
 
 #include "vm.h"
 
-int   ft_count_champs(char **mass, int sum, int argc)
+int		ft_count_champs(char **mass, int sum, int argc)
 {
 	int i;
 
 	i = 1;
-	while(i < argc)
+	while (i < argc)
 	{
 		if (ft_strcmp(mass[i], "-g") == 0 || ft_strcmp(mass[i], "-v") == 0)
 			i += 1;
@@ -32,8 +32,7 @@ int   ft_count_champs(char **mass, int sum, int argc)
 	return (sum);
 }
 
-
-void    ft_make_player(int fd, int j, t_player *champs)
+void	ft_make_player(int fd, int j, t_player *champs)
 {
 	char extra[4];
 
@@ -49,7 +48,7 @@ void    ft_make_player(int fd, int j, t_player *champs)
 		exit(ft_printf("There is some error in player №%d\n", j + 1));
 }
 
-void    ft_comment_code(int fd, int j, t_player *champs)
+void	ft_comment_code(int fd, int j, t_player *champs)
 {
 	if (read(fd, champs[j].comment, 2052) < 2052)
 		exit(ft_printf("Error: File №%d is too small to be a champion\n", j));

@@ -47,7 +47,7 @@ int				indir(int pc, int tns, t_args command)
 	int		ret;
 	char	am;
 
-	am = (char)(op_tab[command.op_code - 1].direct_len == 1 ? 2 : 4);
+	am = (char)(g_tab[command.op_code - 1].direct_len == 1 ? 2 : 4);
 	if (command.op_code == 13 || command.op_code == 14)
 	{
 		ret = pc + (short)tns;

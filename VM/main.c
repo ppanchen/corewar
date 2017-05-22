@@ -13,39 +13,12 @@
 #include <stdio.h>
 #include "vm.h"
 
-void    ft_magic(int fd, int j, t_player *champs)
+void		ft_magic(int fd, int j, t_player *champs)
 {
-	int             i;
-	unsigned char   mass[4];
-	char            arr[4];
-	void            *num;
-
-	num = arr;
-	i = 0;
-	if (read(fd, mass, 4) < 4)
-		exit(ft_printf("Error: File №%d is too small to be a champion\n", j));
-	while (i < 4)
-	{
-		arr[3-i] = mass[i];
-		i++;
-	}
-	champs[j].magic = *(unsigned int*)num;
-}
-
-void    ft_name(int fd, int j, t_player *champs)
-{
-	if (read(fd, champs[j].name, 128) < 128)
-			exit(ft_printf("Error: File №%d "
-								"is too small to be a champion\n", j));
-	champs[j].name[128] = 0;
-}
-
-void    ft_prog_size(int fd, int j, t_player *champs)
-{
-	int             i;
-	unsigned char   mass[4];
-	char            arr[4];
-	void            *num;
+	int				i;
+	unsigned char	mass[4];
+	char			arr[4];
+	void			*num;
 
 	num = arr;
 	i = 0;
@@ -56,10 +29,37 @@ void    ft_prog_size(int fd, int j, t_player *champs)
 		arr[3 - i] = mass[i];
 		i++;
 	}
-	champs[j].code_size= *(unsigned int *)num;
+	champs[j].magic = *(unsigned int*)num;
 }
 
-void    ft_division(char **mass, t_player *champs)
+void		ft_name(int fd, int j, t_player *champs)
+{
+	if (read(fd, champs[j].name, 128) < 128)
+		exit(ft_printf("Error: File №%d "
+				"is too small to be a champion\n", j));
+	champs[j].name[128] = 0;
+}
+
+void		ft_prog_size(int fd, int j, t_player *champs)
+{
+	int				i;
+	unsigned char	mass[4];
+	char			arr[4];
+	void			*num;
+
+	num = arr;
+	i = 0;
+	if (read(fd, mass, 4) < 4)
+		exit(ft_printf("Error: File №%d is too small to be a champion\n", j));
+	while (i < 4)
+	{
+		arr[3 - i] = mass[i];
+		i++;
+	}
+	champs[j].code_size = *(unsigned int *)num;
+}
+
+void		ft_division(char **mass, t_player *champs)
 {
 	int fd;
 	int i;
@@ -67,48 +67,45 @@ void    ft_division(char **mass, t_player *champs)
 	int num;
 
 	j = -1;
-	i = 1;
-	while (mass[i])
-	{
-		num = 0;
+	i = 0;
+	while (mass[++i] && !(num = 0))
 		if (ft_strcmp(mass[i], "-g") != 0 && ft_strcmp(mass[i], "-d") != 0
 			&& ft_strcmp(mass[i], "-v") != 0)
 		{
 			if (ft_strcmp(mass[i], "-n") == 0)
 				((num = ft_atoi(mass[++i]))) ? i++ : show_usage();
-			j = j + 1;
 			fd = open(mass[i], O_RDONLY);
 			if (fd == -1)
 			{
 				perror(mass[i]);
 				exit(-1);
 			}
-			ft_make_player(fd, j, champs);
-			champs[j].pl_num = num ?: 0;
+			ft_make_player(fd, ++j, champs);
+			champs[j].pl_num = num ? num : 0;
 		}
 		else if (ft_strcmp(mass[i], "-d") == 0)
 			i += 1;
-		i++;
-	}
 }
 
-int main(int argc, char **argv)
+int			main(int argc, char **argv)
 {
-	t_player    *player;
+	t_player	*player;
+	char 		c;
 
-    player = 0;
-    find_flag(argv, argc);
-    player = fill_player(argv, argc);
-    if (g_graphic_flag)
-        init_graphic();
+	player = 0;
+	find_flag(argv, argc);
+	player = fill_player(argv, argc);
+	if (g_graphic_flag)
+		init_graphic();
 	place_players(player);
 	run_processes(player);
-    if (g_graphic_flag)
+	if (g_graphic_flag)
 	{
-		timeout(1000);
-		getch();
+		c = 0;
+		while (c != '\n')
+			c = (char)getch();
 		endwin();
 	}
-	printf("winner is player: %d\n", g_winner);
+	free(player);
 	return (0);
 }

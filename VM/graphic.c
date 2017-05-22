@@ -98,13 +98,13 @@ char	print_hand(t_process *process, int i)
 int		print_info(t_process *process)
 {
 	char	*code_bite;
-	int 	i;
-	int 	args_len;
+	int		i;
+	int		args_len;
 
-	args_len = op_tab[process->op_code - 1].args_len;
+	args_len = g_tab[process->op_code - 1].args_len;
 	code_bite = c_bite_to_str(process->args.coding_byte);
 	printf("P% 5d | %s ", process->process_num,
-				  op_tab[process->op_code - 1].name);
+			g_tab[process->op_code - 1].name);
 	i = -1;
 	while (++i < args_len && process->args.coding_byte)
 	{

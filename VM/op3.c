@@ -12,23 +12,23 @@
 
 #include "vm.h"
 
-int 					ft_lld(t_process *process, t_player *player)
+int						ft_lld(t_process *process, t_player *player)
 {
 	(void *)player;
 	if (!process->args.error)
 	{
 		process->reg[process->args.arg[1] - 1] = process->args.arg[0];
-		process->carry_flag = (char) (process->args.arg[0] == 0 ? 1 : 0);
+		process->carry_flag = (char)(process->args.arg[0] == 0 ? 1 : 0);
 	}
 	process->pc = ret_pc(process->pc, process->args.skip);
 	process->op_code = 0;
 	return (0);
 }
 
-int 					ft_lldi(t_process *process, t_player *player)
+int						ft_lldi(t_process *process, t_player *player)
 {
-	char 	*c_bite;
-	int 	pc;
+	char	*c_bite;
+	int		pc;
 
 	(void *)player;
 	if (!process->args.error)
@@ -41,9 +41,9 @@ int 					ft_lldi(t_process *process, t_player *player)
 			process->args.arg[1] =
 					process->reg[process->args.arg[1] - 1];
 		pc = process->pc + (process->args.arg[0] % IDX_MOD) +
-			 (process->args.arg[1] % IDX_MOD);
+			(process->args.arg[1] % IDX_MOD);
 		process->reg[process->args.arg[2] - 1] = transfer(4, pc);
-		ft_memdel((void **) &c_bite);
+		ft_memdel((void **)&c_bite);
 	}
 	process->pc = ret_pc(process->pc, process->args.skip);
 	process->op_code = 0;

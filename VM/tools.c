@@ -12,11 +12,11 @@
 
 #include "vm.h"
 
-int 	ret_pc(int current, int shift)
+int								ret_pc(int current, int shift)
 {
 	int ret;
 
-	ret  = current + shift;
+	ret = current + shift;
 	while (ret >= 4096)
 		ret -= 4096;
 	while (ret < 0)
@@ -24,12 +24,12 @@ int 	ret_pc(int current, int shift)
 	return (ret);
 }
 
-unsigned char 					*to_little_endian(int num)
+unsigned char					*to_little_endian(int num)
 {
 	unsigned char	*arr;
-	unsigned char 	*pointer;
+	unsigned char	*pointer;
 	int				i;
-	int 			j;
+	int				j;
 
 	pointer = (unsigned char *)&num;
 	arr = (unsigned char *)ft_memalloc(4);
@@ -43,7 +43,7 @@ unsigned char 					*to_little_endian(int num)
 	return (arr);
 }
 
-void					place_on_field(unsigned char *str, int pc)
+void							place_on_field(unsigned char *str, int pc)
 {
 	int i;
 
@@ -53,15 +53,14 @@ void					place_on_field(unsigned char *str, int pc)
 		while (pc + i >= 4096)
 			pc -= 4096;
 		g_field[pc + i] = str[i];
-//		print_field();
 	}
 }
 
-char			*c_bite_to_str(int coding_bite)
+char							*c_bite_to_str(int coding_bite)
 {
 	char	*str;
-	char 	*zero;
-	int 	i;
+	char	*zero;
+	int		i;
 
 	str = ft_itoa_base_dw(coding_bite, 2);
 	i = (int)ft_strlen(str);
@@ -74,7 +73,7 @@ char			*c_bite_to_str(int coding_bite)
 	return (str);
 }
 
-int			print_field(void)
+int								print_field(void)
 {
 	int i;
 	int j;

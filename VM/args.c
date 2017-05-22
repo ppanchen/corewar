@@ -84,7 +84,6 @@ t_args			get_op(int pc, t_args command)
 {
 	char	*str;
 
-//	command.op_code = g_field[chk(pc)];
 	if ((command.op_code == 1 || command.op_code == 9 || \
 		command.op_code == 12 || command.op_code == 15))
 	{

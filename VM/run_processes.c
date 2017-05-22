@@ -12,7 +12,7 @@
 
 #include "vm.h"
 
-int 			count_process(t_process *pr)
+int				count_process(t_process *pr)
 {
 	int i;
 
@@ -25,7 +25,7 @@ int 			count_process(t_process *pr)
 	return (i);
 }
 
-t_args			clean_arg()
+t_args			clean_arg(void)
 {
 	t_args args;
 
@@ -39,46 +39,60 @@ t_args			clean_arg()
 	return (args);
 }
 
+void			cycle_pr(t_process *process, t_player *player)
+{
+	while (process)
+	{
+		if (!process->isn_empty)
+		{
+			process->op_code = g_field[process->pc];
+			if ((process->op_code <= 0 || process->op_code > 16))
+				process->pc = ret_pc(process->pc, 1);
+		}
+		if (!(process->op_code <= 0 || process->op_code > 16) &&
+			make_op(process, player))
+			continue ;
+		if (process->next == 0)
+			break ;
+		process = process->next;
+	}
+}
+
+void		find_winner(t_player *player)
+{
+	t_player winner;
+	int i;
+
+	i = 0;
+	while (i < player[0].players)
+	{
+		if (player[i].index == g_winner)
+			winner = player[i];
+		i++;
+	}
+	if (!g_show_map_flag)
+		(!g_graphic_flag) ?
+			ft_printf("Winner is player %i \"%s\"\n", winner.pl_num ?
+			winner.pl_num : -winner.index, winner.name) :
+			mvprintw(64, 64, "Winner is player %i \"%s\"", winner.pl_num ?
+			winner.pl_num : -winner.index, winner.name);
+}
 
 void			run_processes(t_player *player)
 {
 	t_process	*process;
 	t_process	*start;
-	int 		i;
+	int			i;
 
 	i = 0;
 	process = fill_process(player);
 	start = process;
-	while(start)
+	while (start)
 	{
 		(g_debug_flag) && printf("It is now cycle %i\n", i);
-		int n = 0;
-		while (process)
-		{
-			if (!process->isn_empty)
-			{
-				process->op_code = g_field[process->pc];
-//				int j = -1;
-//				ft_printf("pr N: %02d | %04d | ", n, process->pc);
-//				while (++j < 7)
-//					ft_printf("%.2x ", g_field[process->pc + j]);
-//				ft_printf("\n");
-				if ((process->op_code <= 0 || process->op_code > 16))
-					process->pc = ret_pc(process->pc, 1);
-			}
-			if (!(process->op_code <= 0 || process->op_code > 16) &&
- 					make_op(process, player))
-					continue ;
-			if (process->next == 0)
-				break ;
-			process = process->next;
-			n++;
-		}
-		if (g_show_map_flag && g_show_map_flag == i)
-		{
+		cycle_pr(process, player);
+		if (g_show_map_flag && g_show_map_flag == i && !g_graphic_flag)
 			print_field();
-//			exit(1);
-		}
 		process = find_start(process);
 		check_process(&process);
 		(g_graphic_flag) && print_hand(process, i);
@@ -86,4 +100,5 @@ void			run_processes(t_player *player)
 		start = find_start(process);
 		process = start;
 	}
+	find_winner(player);
 }

@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #ifndef VM_H
 # define VM_H
 # include "../libft/libft.h"
@@ -24,48 +23,49 @@
 
 typedef struct			s_player
 {
-	unsigned int        magic;
-	unsigned int        code_size;
-	char                name[128 + 1];
-	char                comment[2048 + 1];
+	unsigned int		magic;
+	unsigned int		code_size;
+	char				name[128 + 1];
+	char				comment[2048 + 1];
 	unsigned char		code[682 + 1];
-	int 				index;
-	int 				pl_num;
-	int                 players;
-}                		t_player;
+	int					index;
+	int					pl_num;
+	int					players;
+}						t_player;
 
-typedef struct          s_args
+typedef struct			s_args
 {
 	int					arg[3];
-	unsigned char       coding_byte;
-	char                op_code;
-	int                 skip;
-	char                error;
-}                       t_args;
+	unsigned char		coding_byte;
+	char				op_code;
+	int					skip;
+	char				error;
+}						t_args;
 
 typedef struct			s_process
 {
-	int 				reg[16];
-	char 				op_code;
-	int 				delay;
-	int 				pc;
+	int					reg[16];
+	char				op_code;
+	int					delay;
+	int					pc;
 	char				carry_flag;
-	/*
-	**	0 - if reg[n] = x, x != 0;
-	**	1 - if reg[n] = 0;
-	*/
 	unsigned int		said_alive;
 	t_args				args;
 	char				isn_empty;
-	int 				process_num;
-	char 				new_pr;
+	int					process_num;
+	char				new_pr;
 	struct s_process	*prev;
 	struct s_process	*next;
 }						t_process;
 
+/*
+**	carry:
+**	0 - if reg[n] = x, x != 0;
+**	1 - if reg[n] = 0;
+*/
 
-char 					make_op(t_process *process, t_player *player);
-typedef int				(* t_action)(t_process *process, t_player *player);
+char					make_op(t_process *process, t_player *player);
+typedef int				(*t_action)(t_process *process, t_player *player);
 int						ft_live(t_process *process, t_player *player);
 int						ft_ld(t_process *process, t_player *player);
 int						ft_st(t_process *process, t_player *player);
@@ -83,43 +83,39 @@ int						ft_lldi(t_process *process, t_player *player);
 int						ft_lfork(t_process *process, t_player *player);
 int						ft_aff(t_process *process, t_player *player);
 
-//t_player				*read_player(char *file);
 t_process				*fill_process(t_player *player);
-void    				ft_magic(int fd, int j, t_player *champs);
-void    				ft_name(int fd, int j, t_player *champs);
-void    				ft_prog_size(int fd, int j, t_player *champs);
-void    				ft_comment_code(int fd, int j, t_player *champs);
-int   					ft_count_champs(char **mass, int sum, int argc);
-void    				ft_make_player(int fd, int j, t_player *champs);
+void					ft_magic(int fd, int j, t_player *champs);
+void					ft_name(int fd, int j, t_player *champs);
+void					ft_prog_size(int fd, int j, t_player *champs);
+void					ft_comment_code(int fd, int j, t_player *champs);
+int						ft_count_champs(char **mass, int sum, int argc);
+void					ft_make_player(int fd, int j, t_player *champs);
 void					run_processes(t_player *player);
 void					place_players(t_player *player);
 t_process				*kill_process(t_process **to_del);
 t_args					parse_op(int pc, unsigned char op_code);
 t_process				*find_start(t_process *process);
-t_op 					find_op(char	op_code);
+t_op					find_op(char	op_code);
 char					fill_check_pr(t_process	*pr, t_op op);
-char 					index_exist(int index, t_player *player);
+char					index_exist(int index, t_player *player);
 t_args					clean_arg();
 void					check_process(t_process **process);
-int 					ret_pc(int current, int shift);
+int						ret_pc(int current, int shift);
 unsigned char			*to_little_endian(int num);
 void					place_on_field(unsigned char *str, int pc);
-char 					*c_bite_to_str(int coding_bite);
+char					*c_bite_to_str(int coding_bite);
 t_process				*shift_list(t_process *first, t_process *start);
 t_process				*cpy_process(t_process *process);
-void                    ft_division(char **mass, t_player *champs);
-t_player                *fill_player(char **argv, int argc);
-void                    find_flag(char **argv, int argc);
-void                    show_usage();
-int 					count_process(t_process *pr);
+void					ft_division(char **mass, t_player *champs);
+t_player				*fill_player(char **argv, int argc);
+void					find_flag(char **argv, int argc);
+void					show_usage();
+int						count_process(t_process *pr);
 int						find_pc_in_arr(int *arr, int val);
 int						print_field(void);
-int 					ret_next_num(t_process *process);
+int						ret_next_num(t_process *process);
 unsigned int			count_of_alives_kill(t_process **pr, int kill_flag);
 int						fill_new_pr(t_process *pr);
-
-
-
 
 t_args					bigcom(int pc, t_args command, char *str);
 t_args					second_b(int pc, t_args command, char *str, int i);
@@ -133,24 +129,20 @@ t_args					get_op(int pc, t_args command);
 t_args					clean_arg();
 t_args					error_small(t_args command, char *str);
 t_args					error_big(t_args command, char *str);
-t_args					reg(t_args command, int* temp);
-int						chk(int    pc);
+t_args					reg(t_args command, int *temp);
+int						chk(int pc);
 int						s(int trans, int temp);
 
-
 void					init_graphic(void);
-char 					print_hand(t_process *pr, int i);
+char					print_hand(t_process *pr, int i);
 int						print_info(t_process *process);
 
-
-
-unsigned char 			g_field[4096];
-int 					g_winner;
+unsigned char			g_field[4096];
+int						g_winner;
 int						g_to_die;
-t_action 				action[17];
-char 					g_graphic_flag;
-int                     g_show_map_flag;
-char 					g_debug_flag;
-
+t_action				g_action[17];
+char					g_graphic_flag;
+int						g_show_map_flag;
+char					g_debug_flag;
 
 #endif
