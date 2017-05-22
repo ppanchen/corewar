@@ -36,19 +36,20 @@ unsigned int	count_of_alives_kill(t_process **pr, int kill_flag)
 		count += process->said_alive;
 		cpy = process->said_alive;
 		process->said_alive = kill_flag == 0 ? cpy : 0;
-		if (cpy == 0 && kill_flag)
+		if (cpy == 0 && kill_flag && process->new_pr != 1)
 			ret = kill_process(&process);
 		else
 			process = process->next;
 		*pr = process ?: ret;
 	}
+	fill_new_pr(find_start(*pr));
 	return (count);
 }
 
 void			check_process(t_process **process)
 {
 	static int		count_of_delta = 0;
-	static int 		to_die = CYCLE_TO_DIE - 1;
+	static int 		to_die = CYCLE_TO_DIE;
 	static int 		count_of_cycles = 0;
 
 	if (g_graphic_flag )
@@ -63,11 +64,13 @@ void			check_process(t_process **process)
 		{
 			count_of_delta++;
 			count_of_cycles = 0;
+			(g_debug_flag) && printf("Cycle to die is now %i\n",
+								CYCLE_TO_DIE - CYCLE_DELTA * count_of_delta);
 		}
 		else
 			count_of_cycles++;
-		to_die = CYCLE_TO_DIE - CYCLE_DELTA * count_of_delta  - 1 > 0 ?
-				 CYCLE_TO_DIE - CYCLE_DELTA * count_of_delta  - 1: 0;
+		to_die = CYCLE_TO_DIE - CYCLE_DELTA * count_of_delta - 1 > 0 ?
+				 CYCLE_TO_DIE - CYCLE_DELTA * count_of_delta - 1 : 0;
 	}
 	else
 		to_die--;
@@ -89,6 +92,7 @@ t_process	*cpy_process(t_process *process)
 	new_pr->op_code = 0;
 	new_pr->delay = 0;
 	new_pr->isn_empty = 0;
+	new_pr->new_pr = 1;
 	new_pr->next = 0;
 	new_pr->prev = 0;
 	return (new_pr);

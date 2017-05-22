@@ -58,6 +58,7 @@ typedef struct			s_process
 	t_args				args;
 	char				isn_empty;
 	int 				process_num;
+	char 				new_pr;
 	struct s_process	*prev;
 	struct s_process	*next;
 }						t_process;
@@ -115,6 +116,8 @@ int						find_pc_in_arr(int *arr, int val);
 int						print_field(void);
 int 					ret_next_num(t_process *process);
 unsigned int			count_of_alives_kill(t_process **pr, int kill_flag);
+int						fill_new_pr(t_process *pr);
+
 
 
 

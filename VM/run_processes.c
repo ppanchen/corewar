@@ -51,6 +51,7 @@ void			run_processes(t_player *player)
 	start = process;
 	while(start)
 	{
+		(g_debug_flag) && printf("It is now cycle %i\n", i);
 		int n = 0;
 		while (process)
 		{
@@ -76,12 +77,12 @@ void			run_processes(t_player *player)
 		if (g_show_map_flag && g_show_map_flag == i)
 		{
 			print_field();
-			exit(1);
+//			exit(1);
 		}
 		process = find_start(process);
+		check_process(&process);
 		(g_graphic_flag) && print_hand(process, i);
 		i++;
-		check_process(&process);
 		start = find_start(process);
 		process = start;
 	}
